@@ -81,27 +81,30 @@
           <input type="text" placeholder="search chatter" />
         </div>
       </div>
-      <div class="content">
-        <div class="button-bg">
-          <router-link to="/post">
-            <button>Publish</button>
-          </router-link>
-        </div>
-        <div class="markdown"></div>
-      </div>
+      <div class="content"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { ref } from "vue";
+import { storage, db } from "@/firebase";
+import {
+  getDownloadURL,
+  ref as storageRef,
+  uploadBytes,
+} from "firebase/storage";
 
-export default defineComponent({
+export default {
   data() {
-    return {};
+    return {
+      postContent: "",
+      profilePicture: null,
+    };
   },
   methods: {},
-});
+};
 </script>
 
 <style>
@@ -321,6 +324,16 @@ a {
 .markdown {
   width: 1076px;
   height: 900px;
+  margin-top: 30px;
+}
+textarea {
+  width: 1076px;
+  height: 400px;
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "DM sans Variable", Sans-serif;
+  font-size: 16px;
   margin-top: 30px;
 }
 </style>
