@@ -81,20 +81,28 @@
           <input type="text" placeholder="search chatter" />
         </div>
       </div>
-      <div class="content"></div>
+      <div class="content">
+        <textarea
+          v-model="postContent"
+          placeholder="Write your post here"
+        ></textarea>
+        <input type="file" @change="handleFileUpload" />
+        <button @click="publishPost">Publish Post</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { ref } from "vue";
-import { storage, db } from "@/firebase";
+import { defineComponent, ref } from "vue";
+import { storage, db } from "../firebase";
+import { useRouter } from "vue-router";
 import {
   getDownloadURL,
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
+import { collection, addDoc, Firestore } from "firebase/firestore";
 
 export default {
   data() {
@@ -103,7 +111,46 @@ export default {
       profilePicture: null,
     };
   },
-  methods: {},
+  methods: {
+    async handleFileUpload(event: Event) {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+    },
+    async publishPost() {
+      if (!this.postContent) return; // Ensure post content is not empty
+
+      // Upload profile picture if selected
+      let profilePicURL = "";
+      if (this.profilePicture) {
+        const storageRef = (storage as any).ref();
+        const profilePicRef = storageRef.child(
+          `profilePictures/${this.$store.state.user.uid}`
+        );
+        await uploadBytes(profilePicRef, this.profilePicture);
+        profilePicURL = await getDownloadURL(profilePicRef);
+      }
+
+      // Save post data to Firestore
+      try {
+        const docRef = await addDoc(collection(db, "posts"), {
+          content: this.postContent,
+          authorId: this.$store.state.user.uid,
+          authorProfilePic: profilePicURL,
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
+
+      // Clear form fields
+      this.postContent = "";
+      this.profilePicture = null;
+
+      // Navigate to a different route after publishing the post
+      const router = useRouter();
+      router.push("/");
+    },
+  },
 };
 </script>
 
@@ -321,14 +368,10 @@ a {
   margin-top: 30px;
   margin-right: 100px;
 }
-.markdown {
-  width: 1076px;
-  height: 900px;
-  margin-top: 30px;
-}
+
 textarea {
   width: 1076px;
-  height: 400px;
+  height: 803px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
