@@ -82,11 +82,27 @@
         </div>
       </div>
       <div class="content">
-        <textarea
+        <!-- Author ID (Assuming it's not editable by the user) -->
+        <input
+          type="text"
+          v-model="authorName"
+          placeholder="Author Name"
+          class="name"
+        />
+        <input
+          type="text"
+          v-model="postTitle"
+          placeholder="Title"
+          class="title"
+        />
+        <simpleMDE
           v-model="postContent"
           placeholder="Write your post here"
-        ></textarea>
-        <input type="file" @change="handleFileUpload" />
+          :options="editorOptions"
+        >
+        </simpleMDE>
+
+        <input type="file" @change="handleFileUpload" class="profile-pic" />
         <button @click="publishPost">Publish Post</button>
       </div>
     </div>
@@ -94,7 +110,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { VueElement, defineComponent, ref } from "vue";
 import { storage, db } from "../firebase";
 import { useRouter } from "vue-router";
 import {
@@ -103,39 +119,60 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { collection, addDoc, Firestore } from "firebase/firestore";
+import { useStore } from "vuex";
+import SimpleMDE from "vue-simplemde";
 
-export default {
+export default defineComponent({
+  components: {
+    SimpleMDE,
+  },
   data() {
     return {
       postContent: "",
-      profilePicture: null,
+      profilePicture: null as File | null,
+      postTitle: "",
+      authorName: "",
+      editorOptions: {
+        spellChecker: false, // Optional: Disable spell checker
+        // You can add more options
+      },
     };
   },
   methods: {
     async handleFileUpload(event: Event) {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (!file) return;
+
+      // Set profilePicture to the selected file
+      this.profilePicture = file;
     },
+
     async publishPost() {
-      if (!this.postContent) return; // Ensure post content is not empty
+      if (!this.postContent || !this.postTitle) return; // Ensure post content is not empty
 
       // Upload profile picture if selected
       let profilePicURL = "";
       if (this.profilePicture) {
-        const storageRef = (storage as any).ref();
-        const profilePicRef = storageRef.child(
+        const profilePicRef = storageRef(
+          storage,
           `profilePictures/${this.$store.state.user.uid}`
         );
         await uploadBytes(profilePicRef, this.profilePicture);
         profilePicURL = await getDownloadURL(profilePicRef);
       }
 
+      // Get current timestamp
+      const timestamp = new Date().toISOString();
+
       // Save post data to Firestore
       try {
         const docRef = await addDoc(collection(db, "posts"), {
+          title: this.postTitle,
           content: this.postContent,
           authorId: this.$store.state.user.uid,
           authorProfilePic: profilePicURL,
+          authorName: this.authorName,
+          timestamp,
         });
         console.log("Document written with ID: ", docRef.id);
       } catch (error) {
@@ -143,15 +180,20 @@ export default {
       }
 
       // Clear form fields
+      this.postTitle = "";
       this.postContent = "";
       this.profilePicture = null;
+      this.authorName = "";
 
       // Navigate to a different route after publishing the post
       const router = useRouter();
-      router.push("/");
+      const NavigateToSignedIn = () => {
+        router.push("/SignedIn");
+      };
+      return { NavigateToSignedIn };
     },
   },
-};
+});
 </script>
 
 <style>
@@ -372,6 +414,36 @@ a {
 textarea {
   width: 1076px;
   height: 803px;
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "DM sans Variable", Sans-serif;
+  font-size: 16px;
+  margin-top: 30px;
+}
+.name {
+  width: 700px;
+  height: 48px;
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "DM sans Variable", Sans-serif;
+  font-size: 16px;
+  margin-top: 30px;
+}
+.title {
+  width: 700px;
+  height: 48px;
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "DM sans Variable", Sans-serif;
+  font-size: 16px;
+  margin-top: 30px;
+}
+.profile-pic {
+  width: 300px;
+  height: 48px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;

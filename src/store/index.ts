@@ -7,9 +7,10 @@ import {
   signOut,
 } from "firebase/auth";
 
-export default createStore({
+const store = createStore({
   state: {
     user: null,
+    error: null,
   },
   mutations: {
     setUser(state, user) {
@@ -18,66 +19,67 @@ export default createStore({
     clearUser(state) {
       state.user = null;
     },
+    setError(state, error) {
+      state.error = error;
+    },
+    clearError(state) {
+      state.error = null;
+    },
   },
   actions: {
     async register({ commit }, details) {
-      const { email, password } = details;
       try {
-        if (router && router.push) {
-          await createUserWithEmailAndPassword(auth, email, password);
-          commit("setUser", auth.currentUser);
-          router.push("/confirmation");
-        } else {
-          throw new Error("router or router.push method not found");
-        }
-      } catch (error: any) {
-        switch (error.code) {
-          case "auth/email-already-in-use":
-            ("Email already in use");
-            break;
-          case "auth/invalid-email":
-            alert("Invalid email");
-            break;
-          case "auth/weak-password":
-            alert("Weak password");
-            break;
-          case "auth/operation-not-allowed":
-            alert("Operation not allowed");
-            break;
-          default:
-            alert("An error occurred");
-        }
+        const { email, password } = details;
+        await createUserWithEmailAndPassword(auth, email, password);
+        commit("setUser", auth.currentUser);
+        router.push("/confirmation");
+      } catch (error) {
+        commit("setError", error);
       }
     },
 
     async login({ commit }, details) {
-      const { email, password } = details;
       try {
+        const { email, password } = details;
         await signInWithEmailAndPassword(auth, email, password);
         commit("setUser", auth.currentUser);
         router.push("/");
-      } catch (error: any) {
-        switch (error.code) {
-          case "auth/user-not-found":
-            alert("User not found");
-            break;
-          case "auth/wrong-password":
-            alert("Wrong password");
-            break;
-          default:
-            alert("An error occurred");
-        }
+      } catch (error) {
+        commit("setError", error);
       }
     },
 
     async signOut({ commit }) {
-      if (router && router.push) {
+      try {
         await signOut(auth);
         commit("clearUser");
         router.push("/login");
-      } else {
-        throw new Error("router or router.push method not found");
+      } catch (error) {
+        commit("setError", error);
       }
+    },
+
+    clearError({ commit }) {
+      commit("clearError");
+    },
+  },
+  getters: {
+    currentUser(state) {
+      return state.user;
+    },
+    error(state) {
+      return state.error;
     },
   },
 });
+
+// Listen for authentication state changes and update the store accordingly
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    store.commit("setUser", user);
+  } else {
+    store.commit("clearUser");
+  }
+});
+
+export default store;
