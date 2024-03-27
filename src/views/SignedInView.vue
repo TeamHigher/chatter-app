@@ -87,13 +87,12 @@
             <h1>FEEDS</h1>
             <p>Explore different content you’d love</p>
           </div>
-        <router-link to="/post">
-          <button>
-            <img src="../assets/pen.png" alt="" />
-            Post a content
-          </button>
-        </router-link>
-
+          <router-link to="/post">
+            <button>
+              <img src="../assets/pen.png" alt="" />
+              Post a content
+            </button>
+          </router-link>
         </div>
         <div class="card1">
           <h1>For you</h1>
@@ -101,11 +100,15 @@
           <h1>Recent</h1>
         </div>
         <div class="blog-wrapper">
-          <div class="blog1">
+          <div v-for="(post, index) in blogPosts" :key="index" class="blog1">
             <div class="blog1-text">
-              <div class="blog1-tex-header">
-               <div></div>
-              </div>
+              <h1>{{ post.title }}</h1>
+              <p>{{ post.content }}</p>
+              <img
+                :src="post.authorProfilePictureURL"
+                alt="Profile Picture"
+                v-if="post.authorProfilePictureURL"
+              />
             </div>
           </div>
         </div>
@@ -115,13 +118,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
+import { storage, db } from "../firebase";
+import { getDownloadURL, ref as storageRef } from "firebase/storage";
+import { collection, getDocs, DocumentData } from "firebase/firestore";
+
+interface BlogPost {
+  title: string;
+  content: string;
+  authorName: string;
+  authorId: string;
+  timestamp: number;
+  authorProfilePictureURL: string;
+  // Add any other properties you expect in a blog post
+}
 
 export default defineComponent({
-  data() {
-    return {};
+  setup() {
+    const profilePictureURL = ref("");
+    const blogPosts = ref<BlogPost[]>([]);
+
+    const getProfilePictureURL = async () => {
+      // Your implementation to fetch profile picture URL
+      // For example:
+      const profilePicRef = storageRef(storage, "profilePictures/userId");
+      const url = await getDownloadURL(profilePicRef);
+      profilePictureURL.value = url;
+    };
+
+    const getBlogPosts = async () => {
+      const postsCollection = collection(db, "posts");
+      const querySnapshot = await getDocs(postsCollection);
+      querySnapshot.forEach((doc) => {
+        blogPosts.value.push(doc.data() as BlogPost); // Cast to the BlogPost type
+      });
+    };
+
+    onMounted(async () => {
+      await getProfilePictureURL();
+      await getBlogPosts();
+    });
+
+    return {
+      profilePictureURL,
+      blogPosts,
+    };
   },
-  methods: {},
 });
 </script>
 
@@ -299,10 +341,10 @@ a {
   align-items: center;
 }
 .content {
-  width: 1076px;
+  width: 1200px;
   height: 100%;
   background-color: white;
-  border: solid 1px #d0d0d0;
+  border: solid 1px blue;
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -389,7 +431,7 @@ a {
   width: 853px;
   height: 80px;
   background-color: white;
-  border: solid 1px #d0d0d0;
+  border: solid 1px red;
   margin-top: 49px;
   margin-left: 30px;
   display: flex;
@@ -414,7 +456,7 @@ a {
   width: 853px;
   height: 100%;
   background-color: white;
-  border: solid 1px #d0d0d0;
+  border: solid 1px red;
   margin-top: 0px;
   margin-left: 30px;
   display: flex;
@@ -449,7 +491,7 @@ a {
   width: 526px;
   height: 188px;
   background-color: white;
-  border: solid 1px red;
+  border: solid 1px green;
   margin-top: 0px;
   margin-left: 0px;
   display: flex;

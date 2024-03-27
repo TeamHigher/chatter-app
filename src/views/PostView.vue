@@ -95,12 +95,12 @@
           placeholder="Title"
           class="title"
         />
-        <simpleMDE
+        <textarea
           v-model="postContent"
           placeholder="Write your post here"
           :options="editorOptions"
         >
-        </simpleMDE>
+        </textarea>
 
         <input type="file" @change="handleFileUpload" class="profile-pic" />
         <button @click="publishPost">Publish Post</button>
@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts">
-import { VueElement, defineComponent, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { storage, db } from "../firebase";
 import { useRouter } from "vue-router";
 import {
@@ -118,46 +118,47 @@ import {
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
-import { collection, addDoc, Firestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { useStore } from "vuex";
-import SimpleMDE from "vue-simplemde";
 
 export default defineComponent({
-  components: {
-    SimpleMDE,
-  },
-  data() {
-    return {
-      postContent: "",
-      profilePicture: null as File | null,
-      postTitle: "",
-      authorName: "",
-      editorOptions: {
-        spellChecker: false, // Optional: Disable spell checker
-        // You can add more options
-      },
+  setup() {
+    // Define reactive variables using ref()
+    const postContent = ref("");
+    const profilePicture = ref<File | null>(null);
+    const postTitle = ref("");
+    const authorName = ref("");
+    const editorOptions = {
+      spellChecker: false, // Optional: Disable spell checker
+      // You can add more options
     };
-  },
-  methods: {
-    async handleFileUpload(event: Event) {
+
+    // Router
+    const router = useRouter();
+
+    // Store
+    const store = useStore();
+
+    // Methods
+    const handleFileUpload = (event: Event) => {
       const file = (event.target as HTMLInputElement).files?.[0];
-      if (!file) return;
+      if (file) {
+        // Set profilePicture to the selected file
+        profilePicture.value = file;
+      }
+    };
 
-      // Set profilePicture to the selected file
-      this.profilePicture = file;
-    },
-
-    async publishPost() {
-      if (!this.postContent || !this.postTitle) return; // Ensure post content is not empty
+    const publishPost = async () => {
+      if (!postContent.value || !postTitle.value) return; // Ensure post content is not empty
 
       // Upload profile picture if selected
       let profilePicURL = "";
-      if (this.profilePicture) {
+      if (profilePicture.value) {
         const profilePicRef = storageRef(
           storage,
-          `profilePictures/${this.$store.state.user.uid}`
+          `profilePictures/${store.state.user.uid}`
         );
-        await uploadBytes(profilePicRef, this.profilePicture);
+        await uploadBytes(profilePicRef, profilePicture.value);
         profilePicURL = await getDownloadURL(profilePicRef);
       }
 
@@ -167,11 +168,11 @@ export default defineComponent({
       // Save post data to Firestore
       try {
         const docRef = await addDoc(collection(db, "posts"), {
-          title: this.postTitle,
-          content: this.postContent,
-          authorId: this.$store.state.user.uid,
+          title: postTitle.value,
+          content: postContent.value,
+          authorId: store.state.user.uid,
           authorProfilePic: profilePicURL,
-          authorName: this.authorName,
+          authorName: authorName.value,
           timestamp,
         });
         console.log("Document written with ID: ", docRef.id);
@@ -180,18 +181,25 @@ export default defineComponent({
       }
 
       // Clear form fields
-      this.postTitle = "";
-      this.postContent = "";
-      this.profilePicture = null;
-      this.authorName = "";
+      postTitle.value = "";
+      postContent.value = "";
+      profilePicture.value = null;
+      authorName.value = "";
 
       // Navigate to a different route after publishing the post
-      const router = useRouter();
-      const NavigateToSignedIn = () => {
-        router.push("/SignedIn");
-      };
-      return { NavigateToSignedIn };
-    },
+      router.push("/SignedIn");
+    };
+
+    // Return variables and methods for template
+    return {
+      postContent,
+      profilePicture,
+      postTitle,
+      authorName,
+      editorOptions,
+      handleFileUpload,
+      publishPost,
+    };
   },
 });
 </script>
