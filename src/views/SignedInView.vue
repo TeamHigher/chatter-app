@@ -81,7 +81,7 @@
           <input type="text" placeholder="search chatter" />
         </div>
       </div>
-      <div class="content">
+      <div class="container">
         <div class="cats">
           <div class="cats-text">
             <h1>FEEDS</h1>
@@ -94,22 +94,70 @@
             </button>
           </router-link>
         </div>
-        <div class="card1">
-          <h1>For you</h1>
-          <h1>Featured</h1>
-          <h1>Recent</h1>
-        </div>
-        <div class="blog-wrapper">
-          <div v-for="(post, index) in blogPosts" :key="index" class="blog1">
-            <div class="blog1-text">
-              <h1>{{ post.title }}</h1>
-              <p>{{ post.content }}</p>
+        <div class="main-content">
+          <div class="card1">
+            <h1>For you</h1>
+            <h1>Featured</h1>
+            <h1>Recent</h1>
+          </div>
+
+          <div
+            v-for="(post, index) in blogPosts"
+            :key="index"
+            class="blog-text"
+          >
+            <div class="blog-text-header">
+              <div class="prof-name-time">
+                <div class="profile-pic">
+                  <img
+                    :src="post.profilePictureURL"
+                    alt="Profile Picture"
+                    v-if="post.profilePictureURL"
+                    class="profile-pic"
+                  />
+                </div>
+                <div class="name-timestamp">
+                  <h3>{{ post.authorName }}</h3>
+                  <h5>{{ post.timestamp }}</h5>
+                </div>
+              </div>
+              <div class="title">
+                <h1>{{ post.title }}</h1>
+              </div>
+            </div>
+            <p>{{ post.content }}</p>
+            <div class="blog-img">
               <img
-                :src="post.authorProfilePictureURL"
-                alt="Profile Picture"
-                v-if="post.authorProfilePictureURL"
+                :src="post.blogImageURL"
+                alt="Blog Image"
+                v-if="post.blogImageURL"
+                class="blog-img"
               />
             </div>
+            <div class="blog-actions">
+              <div class="likes">
+                <img
+                  src="../assets/like-icon.png"
+                  alt="like-icon"
+                  @click="incrementLikes(post)"
+                />{{ post.likes }}
+              </div>
+              <div class="comments">
+                <img
+                  src="../assets/comment-icon.png"
+                  alt="comment-icon"
+                  @click="addComment(post)"
+                />{{ post.comments ? post.comments.length : 0 }}
+              </div>
+              <div class="views">
+                <img
+                  src="../assets/views-icon.png"
+                  alt="share-icon"
+                  @click="incrementViews(post)"
+                />{{ post.views }}
+              </div>
+            </div>
+            <hr />
           </div>
         </div>
       </div>
@@ -121,7 +169,13 @@
 import { defineComponent, ref, onMounted } from "vue";
 import { storage, db } from "../firebase";
 import { getDownloadURL, ref as storageRef } from "firebase/storage";
-import { collection, getDocs, DocumentData } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  DocumentData,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 interface BlogPost {
   title: string;
@@ -129,8 +183,19 @@ interface BlogPost {
   authorName: string;
   authorId: string;
   timestamp: number;
-  authorProfilePictureURL: string;
+  profilePictureURL: string;
+  blogImageURL: string; // Add this property for the blog image URL
+  likes: number;
+  comments: comment[];
+  views: number;
+  id: string;
   // Add any other properties you expect in a blog post
+}
+
+interface comment {
+  authorId: string;
+  content: string;
+  timestamp: number;
 }
 
 export default defineComponent({
@@ -138,10 +203,58 @@ export default defineComponent({
     const profilePictureURL = ref("");
     const blogPosts = ref<BlogPost[]>([]);
 
+    const incrementLikes = async (post: BlogPost) => {
+      if (post && typeof post.likes === "number") {
+        // If the post and likes property are defined
+        post.likes += 1;
+        await updateLikesInFirestore(post);
+      } else {
+        // If either post or likes property is undefined
+        console.error("Invalid post object or likes property undefined");
+      }
+    };
+
+    const addComment = async (post: BlogPost) => {
+      if (post && Array.isArray(post.comments)) {
+        const newComment: comment = {
+          authorId: "user123",
+          content: "New comment",
+          timestamp: Date.now(),
+        };
+        post.comments.push(newComment);
+        await updateCommentsInFirestore(post);
+      } else {
+        console.error("Invalid post object or comments array undefined");
+      }
+    };
+
+    const incrementViews = async (post: BlogPost) => {
+      post.views += 1;
+      await updateViewsInFirestore(post);
+    };
+
+    const updateLikesInFirestore = async (post: BlogPost) => {
+      const postRef = doc(db, "posts", post.id); // Assuming you have an 'id' field in BlogPost
+      await updateDoc(postRef, { likes: post.likes });
+    };
+
+    const updateCommentsInFirestore = async (post: BlogPost) => {
+      const postRef = doc(db, "posts", post.id);
+      await updateDoc(postRef, { comments: post.comments });
+    };
+
+    const updateViewsInFirestore = async (post: BlogPost) => {
+      const postRef = doc(db, "posts", post.id);
+      await updateDoc(postRef, { views: post.views });
+    };
+
     const getProfilePictureURL = async () => {
       // Your implementation to fetch profile picture URL
       // For example:
-      const profilePicRef = storageRef(storage, "profilePictures/userId");
+      const profilePicRef = storageRef(
+        storage,
+        "profilePictures/Y14zIEpPsQVs1FatwqSLf0dLEFY2/"
+      );
       const url = await getDownloadURL(profilePicRef);
       profilePictureURL.value = url;
     };
@@ -150,7 +263,26 @@ export default defineComponent({
       const postsCollection = collection(db, "posts");
       const querySnapshot = await getDocs(postsCollection);
       querySnapshot.forEach((doc) => {
-        blogPosts.value.push(doc.data() as BlogPost); // Cast to the BlogPost type
+        const postData = doc.data() as BlogPost; // Cast to the BlogPost type
+        const likes = postData.likes || 0;
+        const comments = postData.comments || [];
+        const views = postData.views || 0;
+
+        const blogImagePath = postData.blogImageURL;
+
+        if (blogImagePath) {
+          const blogImageRef = storageRef(storage, blogImagePath);
+          getDownloadURL(blogImageRef)
+            .then((url) => {
+              postData.blogImageURL = url;
+              blogPosts.value.push(postData);
+            })
+            .catch((error) => {
+              console.error("Error getting blog image URL: ", error);
+            });
+        } else {
+          blogPosts.value.push(postData);
+        }
       });
     };
 
@@ -162,6 +294,9 @@ export default defineComponent({
     return {
       profilePictureURL,
       blogPosts,
+      incrementLikes,
+      addComment,
+      incrementViews,
     };
   },
 });
@@ -340,11 +475,10 @@ a {
   justify-content: center;
   align-items: center;
 }
-.content {
+.container {
   width: 1200px;
   height: 100%;
-  background-color: white;
-  border: solid 1px blue;
+  border: solid 1px #d0d0d0;
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -431,9 +565,8 @@ a {
   width: 853px;
   height: 80px;
   background-color: white;
-  border: solid 1px red;
   margin-top: 49px;
-  margin-left: 30px;
+  margin-left: 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -452,49 +585,174 @@ a {
   font-family: "DM Sans variable", sans-serif;
   border-radius: 8px;
 }
-.blog-wrapper {
-  width: 853px;
+
+.blog-text {
+  width: 700px;
   height: 100%;
   background-color: white;
-  border: solid 1px red;
   margin-top: 0px;
   margin-left: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   border-radius: 8px;
 }
-.blog1 {
-  width: 620px;
-  height: 100%;
-  background-color: white;
-  border: solid 1px purple;
-  margin-top: 30px;
-  margin-left: 44px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.blog1-text {
-  width: 620px;
-  height: 100%;
-  background-color: white;
-  border: solid 1px green;
-  margin-top: 0px;
-  margin-left: 0px;
-  display: flex;
-  flex-direction: column;
-}
-.blog1-tex-header {
+.blog-text-header {
   width: 526px;
   height: 188px;
+  gap: 12px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  border-radius: 8px;
+}
+.prof-name-time {
+  width: 500px;
+  height: 120px;
+  gap: 12px;
   background-color: white;
-  border: solid 1px green;
   margin-top: 0px;
   margin-left: 0px;
   display: flex;
   flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.profile-pic {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px red;
+}
+
+.name-timestamp {
+  width: 300px;
+  height: 71px;
+  gap: 12px;
+  background-color: white;
+  margin-top: 0px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+}
+.name-timestamp h3 {
+  width: 300px;
+  height: 35px;
+  font-family: "DM sans Variable", Sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+.name-timestamp h5 {
+  width: 300px;
+  height: 24px;
+  font-family: "DM sans Variable", Sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #111111;
+}
+.title {
+  width: 500px;
+  height: 48px;
+  padding: 10px 16px;
+  margin-top: 20px;
+  margin-left: 0px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.title h1 {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 36px;
+  color: #111111;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  font-family: "DM Sans variable", sans-serif;
+  text-align: left;
+  margin-left: 0px;
+}
+
+.main-content {
+  width: 1200px;
+  height: 100%;
+  border: solid 1px #d0d0d0;
+  margin-top: 0px;
+  margin-left: 0px;
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "DM sans Variable", Sans-serif;
+}
+.main-content p {
+  width: 700px;
+  height: auto;
+  background-color: white;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  font-family: "DM sans Variable", Sans-serif;
+}
+.blog-img {
+  width: 700px;
+  height: 242px;
+  background-color: white;
+  margin-top: 0px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  border-radius: 8px;
+}
+.blog-actions {
+  width: 700px;
+  height: 48px;
+  background-color: white;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+}
+hr {
+  width: 700px;
+  height: 1px;
+  color: #d0d0d0;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>

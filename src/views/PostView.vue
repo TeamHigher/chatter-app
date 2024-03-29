@@ -82,7 +82,13 @@
         </div>
       </div>
       <div class="content">
-        <!-- Author ID (Assuming it's not editable by the user) -->
+        <!-- Profile picture upload -->
+        <input
+          type="file"
+          @change="handleProfilePicUpload"
+          class="profile-pic"
+        />
+
         <input
           type="text"
           v-model="authorName"
@@ -101,8 +107,13 @@
           :options="editorOptions"
         >
         </textarea>
+        <input
+          type="file"
+          accept="image/*"
+          @change="handleBlogImageUpload"
+          class="blog-image"
+        />
 
-        <input type="file" @change="handleFileUpload" class="profile-pic" />
         <button @click="publishPost">Publish Post</button>
       </div>
     </div>
@@ -123,81 +134,96 @@ import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
-    // Define reactive variables using ref()
     const postContent = ref("");
     const profilePicture = ref<File | null>(null);
+    const blogImage = ref<File | null>(null); // Added for blog image
     const postTitle = ref("");
     const authorName = ref("");
     const editorOptions = {
-      spellChecker: false, // Optional: Disable spell checker
-      // You can add more options
+      spellChecker: true,
     };
 
-    // Router
     const router = useRouter();
-
-    // Store
     const store = useStore();
 
-    // Methods
-    const handleFileUpload = (event: Event) => {
+    const handleProfilePicUpload = (event: Event) => {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
-        // Set profilePicture to the selected file
         profilePicture.value = file;
       }
     };
 
-    const publishPost = async () => {
-      if (!postContent.value || !postTitle.value) return; // Ensure post content is not empty
-
-      // Upload profile picture if selected
-      let profilePicURL = "";
-      if (profilePicture.value) {
-        const profilePicRef = storageRef(
-          storage,
-          `profilePictures/${store.state.user.uid}`
-        );
-        await uploadBytes(profilePicRef, profilePicture.value);
-        profilePicURL = await getDownloadURL(profilePicRef);
+    const handleBlogImageUpload = (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        blogImage.value = file;
       }
+    };
 
-      // Get current timestamp
-      const timestamp = new Date().toISOString();
-
-      // Save post data to Firestore
+    const publishPost = async () => {
       try {
+        if (!postContent.value || !postTitle.value) {
+          throw new Error("Please provide a title and content for your post.");
+        }
+
+        let profilePicURL = "";
+        if (profilePicture.value) {
+          const profilePicRef = storageRef(
+            storage,
+            `profilePictures/${store.state.user.uid}`
+          );
+          await uploadBytes(profilePicRef, profilePicture.value);
+          profilePicURL = await getDownloadURL(profilePicRef);
+        }
+
+        let blogImageURL = "";
+        if (blogImage.value) {
+          const blogImageRef = storageRef(
+            storage,
+            `blogImages/${store.state.user.uid}/${Date.now()}_${
+              blogImage.value.name
+            }`
+          );
+          await uploadBytes(blogImageRef, blogImage.value);
+          blogImageURL = await getDownloadURL(blogImageRef);
+        }
+
+        const timestamp = new Date().toISOString();
+
         const docRef = await addDoc(collection(db, "posts"), {
           title: postTitle.value,
           content: postContent.value,
           authorId: store.state.user.uid,
           authorProfilePic: profilePicURL,
           authorName: authorName.value,
+          blogImage: blogImageURL,
           timestamp,
         });
         console.log("Document written with ID: ", docRef.id);
-      } catch (error) {
-        console.error("Error adding document: ", error);
+
+        // Reset form fields after successful post
+        postTitle.value = "";
+        postContent.value = "";
+        profilePicture.value = null;
+        blogImage.value = null;
+        authorName.value = "";
+
+        router.push("/SignedIn");
+      } catch (error: any) {
+        console.error("Error publishing post: ", error.message);
+        // You can display an error message to the user here
       }
-
-      // Clear form fields
-      postTitle.value = "";
-      postContent.value = "";
-      profilePicture.value = null;
-      authorName.value = "";
-
-      // Navigate to a different route after publishing the post
-      router.push("/SignedIn");
     };
 
-    // Return variables and methods for template
     return {
       postContent,
       profilePicture,
+      blogImage, // Added for blog image
       postTitle,
       authorName,
       editorOptions,
-      handleFileUpload,
+      handleProfilePicUpload,
+      handleBlogImageUpload, // Added for blog image
       publishPost,
     };
   },
@@ -377,16 +403,16 @@ a {
   align-items: center;
 }
 .content {
-  width: 1076px;
-  height: 803px;
+  width: 1500px;
+  height: 100%;
   background-color: white;
+  border: solid 1px #d0d0d0;
   margin-top: 30px;
-  margin-bottom: 100px;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
 }
-
 button {
   width: 177px;
   height: 56px;
@@ -426,37 +452,8 @@ textarea {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 30px;
-}
-.name {
-  width: 700px;
-  height: 48px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  margin-top: 30px;
-}
-.title {
-  width: 700px;
-  height: 48px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  margin-top: 30px;
-}
-.profile-pic {
-  width: 300px;
-  height: 48px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  margin-top: 30px;
+  font-weight: 500;
 }
 </style>
