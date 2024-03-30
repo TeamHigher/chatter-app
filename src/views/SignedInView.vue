@@ -149,6 +149,7 @@
                   @click="addComment(post)"
                 />{{ post.comments ? post.comments.length : 0 }}
               </div>
+
               <div class="views">
                 <img
                   src="../assets/views-icon.png"
@@ -156,6 +157,13 @@
                   @click="incrementViews(post)"
                 />{{ post.views }}
               </div>
+              <!-- Include the CommentSection component -->
+              <CommentSection
+                :post="selectedPost"
+                v-if="showComments"
+                @submitComment="submitComment"
+                class="comment-section"
+              />
             </div>
             <hr />
           </div>
@@ -169,6 +177,7 @@
 import { defineComponent, ref, onMounted } from "vue";
 import { storage, db } from "../firebase";
 import { getDownloadURL, ref as storageRef } from "firebase/storage";
+import CommentSection from "../views/CommentSection.vue";
 import {
   collection,
   getDocs,
@@ -199,11 +208,44 @@ interface comment {
 }
 
 export default defineComponent({
+  components: {
+    CommentSection,
+  },
   setup() {
+    const showComments = ref(false);
+    const selectedPost = ref<any>(null); // Adjust the type as per your data structure
+    const newCommentText = ref("");
+
+    const toggleCommentSection = (post: any) => {
+      showComments.value = !showComments.value;
+      selectedPost.value = post;
+    };
+
+    async function submitComment() {
+      if (newCommentText.value.trim() === "") return;
+
+      try {
+        // Update Firestore document with new comment
+        const postRef = doc(db, "posts", selectedPost.value.id);
+        await updateDoc(postRef, {
+          comments: [
+            ...selectedPost.value.comments,
+            { text: newCommentText.value },
+          ],
+        });
+
+        // Clear input field after submission
+        newCommentText.value = "";
+      } catch (error) {
+        console.error("Error submitting comment:", error);
+      }
+    }
+
     const profilePictureURL = ref("");
     const blogPosts = ref<BlogPost[]>([]);
 
     const incrementLikes = async (post: BlogPost) => {
+      console.log("Post object:", post); // Add logging to check the post object
       if (post && typeof post.likes === "number") {
         // If the post and likes property are defined
         post.likes += 1;
@@ -223,27 +265,48 @@ export default defineComponent({
         };
         post.comments.push(newComment);
         await updateCommentsInFirestore(post);
+        // Toggle the comment section to show the newly added comment
+        toggleCommentSection(post);
       } else {
         console.error("Invalid post object or comments array undefined");
       }
     };
 
     const incrementViews = async (post: BlogPost) => {
+      if (!post || typeof post.views !== "number") {
+        console.error("Invalid post object or views property undefined");
+        return;
+      }
       post.views += 1;
       await updateViewsInFirestore(post);
     };
 
     const updateLikesInFirestore = async (post: BlogPost) => {
+      console.log("Post object:", post); // Add logging to check the post object
+      if (!post || !post.id) {
+        console.error("Invalid post object or missing id property");
+        return;
+      }
       const postRef = doc(db, "posts", post.id); // Assuming you have an 'id' field in BlogPost
       await updateDoc(postRef, { likes: post.likes });
     };
 
     const updateCommentsInFirestore = async (post: BlogPost) => {
+      console.log("Post object:", post); // Add logging to check the post object
+      if (!post || !post.id) {
+        console.error("Invalid post object or missing id property");
+        return;
+      }
       const postRef = doc(db, "posts", post.id);
       await updateDoc(postRef, { comments: post.comments });
     };
 
     const updateViewsInFirestore = async (post: BlogPost) => {
+      console.log("Post object:", post); // Add logging to check the post object
+      if (!post || !post.id) {
+        console.error("Invalid post object or missing id property");
+        return;
+      }
       const postRef = doc(db, "posts", post.id);
       await updateDoc(postRef, { views: post.views });
     };
@@ -260,31 +323,35 @@ export default defineComponent({
     };
 
     const getBlogPosts = async () => {
-      const postsCollection = collection(db, "posts");
-      const querySnapshot = await getDocs(postsCollection);
-      querySnapshot.forEach((doc) => {
-        const postData = doc.data() as BlogPost; // Cast to the BlogPost type
-        const likes = postData.likes || 0;
-        const comments = postData.comments || [];
-        const views = postData.views || 0;
+  const postsCollection = collection(db, "posts");
+  const querySnapshot = await getDocs(postsCollection);
+  querySnapshot.forEach(async (doc) => {
+    const postData = doc.data() as BlogPost; // Cast to the BlogPost type
+    // Fetch likes and views count from Firestore
+    postData.likes = postData.likes || 0; // Initialize to 0 if likes count is undefined
+    postData.views = postData.views || 0; // Initialize to 0 if views count is undefined
+    if (!postData.comments) {
+      postData.comments = [];
+    }
 
-        const blogImagePath = postData.blogImageURL;
+    // Fetch profile picture URL
+    if (postData.profilePictureURL) {
+      const profilePicRef = storageRef(storage, postData.profilePictureURL);
+      const url = await getDownloadURL(profilePicRef);
+      postData.profilePictureURL = url;
+    }
 
-        if (blogImagePath) {
-          const blogImageRef = storageRef(storage, blogImagePath);
-          getDownloadURL(blogImageRef)
-            .then((url) => {
-              postData.blogImageURL = url;
-              blogPosts.value.push(postData);
-            })
-            .catch((error) => {
-              console.error("Error getting blog image URL: ", error);
-            });
-        } else {
-          blogPosts.value.push(postData);
-        }
-      });
-    };
+    // Fetch blog image URL
+    if (postData.blogImageURL) {
+      const blogImageRef = storageRef(storage, postData.blogImageURL);
+      const url = await getDownloadURL(blogImageRef);
+      postData.blogImageURL = url;
+    }
+
+    blogPosts.value.push(postData);
+  });
+};
+
 
     onMounted(async () => {
       await getProfilePictureURL();
@@ -297,6 +364,11 @@ export default defineComponent({
       incrementLikes,
       addComment,
       incrementViews,
+      showComments,
+      selectedPost,
+      toggleCommentSection,
+      newCommentText,
+      submitComment,
     };
   },
 });
