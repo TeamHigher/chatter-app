@@ -110,9 +110,9 @@
               <div class="prof-name-time">
                 <div class="profile-pic">
                   <img
-                    :src="post.profilePictureURL"
+                    :src="post.authorProfilePic"
                     alt="Profile Picture"
-                    v-if="post.profilePictureURL"
+                    v-if="post.authorProfilePic"
                     class="profile-pic"
                   />
                 </div>
@@ -128,9 +128,9 @@
             <p>{{ post.content }}</p>
             <div class="blog-img">
               <img
-                :src="post.blogImageURL"
+                :src="post.blogImage"
                 alt="Blog Image"
-                v-if="post.blogImageURL"
+                v-if="post.blogImage"
                 class="blog-img"
               />
             </div>
@@ -192,8 +192,8 @@ interface BlogPost {
   authorName: string;
   authorId: string;
   timestamp: number;
-  profilePictureURL: string;
-  blogImageURL: string; // Add this property for the blog image URL
+  authorProfilePic: string;
+  blogImage: string; // Add this property for the blog image URL
   likes: number;
   comments: comment[];
   views: number;
@@ -323,35 +323,47 @@ export default defineComponent({
     };
 
     const getBlogPosts = async () => {
-  const postsCollection = collection(db, "posts");
-  const querySnapshot = await getDocs(postsCollection);
-  querySnapshot.forEach(async (doc) => {
-    const postData = doc.data() as BlogPost; // Cast to the BlogPost type
-    // Fetch likes and views count from Firestore
-    postData.likes = postData.likes || 0; // Initialize to 0 if likes count is undefined
-    postData.views = postData.views || 0; // Initialize to 0 if views count is undefined
-    if (!postData.comments) {
-      postData.comments = [];
-    }
+      const postsCollection = collection(db, "posts");
+      const querySnapshot = await getDocs(postsCollection);
+      querySnapshot.forEach(async (doc) => {
+        const postData = doc.data() as BlogPost; // Cast to the BlogPost type
+        // Fetch likes and views count from Firestore
+        postData.likes = postData.likes || 0; // Initialize to 0 if likes count is undefined
+        postData.views = postData.views || 0; // Initialize to 0 if views count is undefined
+        if (!postData.comments) {
+          postData.comments = [];
+        }
 
-    // Fetch profile picture URL
-    if (postData.profilePictureURL) {
-      const profilePicRef = storageRef(storage, postData.profilePictureURL);
-      const url = await getDownloadURL(profilePicRef);
-      postData.profilePictureURL = url;
-    }
+        // Fetch profile picture URL
+        if (postData.authorProfilePic) {
+          const profilePicRef = storageRef(storage, postData.authorProfilePic); // Make sure postData.authorProfilePic is a valid path
+          try {
+            const url = await getDownloadURL(profilePicRef);
+            postData.authorProfilePic = url;
+          } catch (error) {
+            console.error("Error fetching profile picture URL:", error);
+          }
+          const url = await getDownloadURL(profilePicRef);
+          postData.authorProfilePic = url;
+        }
 
-    // Fetch blog image URL
-    if (postData.blogImageURL) {
-      const blogImageRef = storageRef(storage, postData.blogImageURL);
-      const url = await getDownloadURL(blogImageRef);
-      postData.blogImageURL = url;
-    }
+        // Fetch blog image URL
+        if (postData.authorProfilePic) {
+          try {
+            const blogImageRef = storageRef(storage, postData.blogImage);
+            const url = await getDownloadURL(blogImageRef);
+            postData.blogImage = url;
+          } catch (error) {
+            console.error("Error fetching blog image URL:", error);
+          }
+          const blogImageRef = storageRef(storage, postData.blogImage);
+          const url = await getDownloadURL(blogImageRef);
+          postData.blogImage = url;
+        }
 
-    blogPosts.value.push(postData);
-  });
-};
-
+        blogPosts.value.push(postData);
+      });
+    };
 
     onMounted(async () => {
       await getProfilePictureURL();
@@ -707,7 +719,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px red;
 }
 
 .name-timestamp {
