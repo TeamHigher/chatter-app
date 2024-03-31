@@ -316,7 +316,7 @@ export default defineComponent({
       // For example:
       const profilePicRef = storageRef(
         storage,
-        "profilePictures/Y14zIEpPsQVs1FatwqSLf0dLEFY2/"
+        "authorProfilePic/Y14zIEpPsQVs1FatwqSLf0dLEFY2/"
       );
       const url = await getDownloadURL(profilePicRef);
       profilePictureURL.value = url;
@@ -348,7 +348,7 @@ export default defineComponent({
         }
 
         // Fetch blog image URL
-        if (postData.authorProfilePic) {
+        if (postData.blogImage) {
           try {
             const blogImageRef = storageRef(storage, postData.blogImage);
             const url = await getDownloadURL(blogImageRef);

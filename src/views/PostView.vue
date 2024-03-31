@@ -135,7 +135,7 @@ import { useStore } from "vuex";
 export default defineComponent({
   setup() {
     const postContent = ref("");
-    const profilePicture = ref<File | null>(null);
+    const authorProfilePic = ref<File | null>(null);
     const blogImage = ref<File | null>(null); // Added for blog image
     const postTitle = ref("");
     const authorName = ref("");
@@ -149,7 +149,7 @@ export default defineComponent({
     const handleProfilePicUpload = (event: Event) => {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
-        profilePicture.value = file;
+        authorProfilePic.value = file;
       }
     };
 
@@ -167,12 +167,12 @@ export default defineComponent({
         }
 
         let profilePicURL = "";
-        if (profilePicture.value) {
+        if (authorProfilePic.value) {
           const profilePicRef = storageRef(
             storage,
-            `profilePictures/${store.state.user.uid}`
+            `authorProfilePic/${store.state.user.uid}`
           );
-          await uploadBytes(profilePicRef, profilePicture.value);
+          await uploadBytes(profilePicRef, authorProfilePic.value);
           profilePicURL = await getDownloadURL(profilePicRef);
         }
 
@@ -180,7 +180,7 @@ export default defineComponent({
         if (blogImage.value) {
           const blogImageRef = storageRef(
             storage,
-            `blogImages/${store.state.user.uid}/${Date.now()}_${
+            `blogImage/${store.state.user.uid}/${Date.now()}_${
               blogImage.value.name
             }`
           );
@@ -204,7 +204,7 @@ export default defineComponent({
         // Reset form fields after successful post
         postTitle.value = "";
         postContent.value = "";
-        profilePicture.value = null;
+        authorProfilePic.value = null;
         blogImage.value = null;
         authorName.value = "";
 
@@ -217,7 +217,7 @@ export default defineComponent({
 
     return {
       postContent,
-      profilePicture,
+      authorProfilePic,
       blogImage, // Added for blog image
       postTitle,
       authorName,
