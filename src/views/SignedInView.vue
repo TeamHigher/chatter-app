@@ -80,6 +80,7 @@
           <img src="../assets/search-icon.png" alt="icon-5" />
           <input type="text" placeholder="search chatter" />
         </div>
+        <AccountView />
       </div>
       <div class="container">
         <div class="cats">
@@ -159,6 +160,8 @@
               </div>
               <!-- Include the CommentSection component -->
               <CommentSection
+                :comments="post.comments"
+                :postId="post.id"
                 :post="selectedPost"
                 v-if="showComments"
                 @submitComment="submitComment"
@@ -184,7 +187,10 @@ import {
   DocumentData,
   doc,
   updateDoc,
+  query,
+  where,
 } from "firebase/firestore";
+import AccountView from "./AccountView.vue";
 
 interface BlogPost {
   title: string;
@@ -210,11 +216,13 @@ interface comment {
 export default defineComponent({
   components: {
     CommentSection,
-  },
+    AccountView
+},
   setup() {
     const showComments = ref(false);
     const selectedPost = ref<any>(null); // Adjust the type as per your data structure
     const newCommentText = ref("");
+    const comments = ref<comment[]>([]);
 
     const toggleCommentSection = (post: any) => {
       showComments.value = !showComments.value;
@@ -327,41 +335,60 @@ export default defineComponent({
       const querySnapshot = await getDocs(postsCollection);
       querySnapshot.forEach(async (doc) => {
         const postData = doc.data() as BlogPost; // Cast to the BlogPost type
+        // Ensure postData has an 'id' property
+        const postWithId = { ...postData, id: doc.id };
         // Fetch likes and views count from Firestore
-        postData.likes = postData.likes || 0; // Initialize to 0 if likes count is undefined
-        postData.views = postData.views || 0; // Initialize to 0 if views count is undefined
-        if (!postData.comments) {
-          postData.comments = [];
+        postWithId.likes = postWithId.likes || 0;
+        postWithId.views = postWithId.views || 0;
+        if (!postWithId.comments) {
+          postWithId.comments = [];
         }
 
         // Fetch profile picture URL
-        if (postData.authorProfilePic) {
-          const profilePicRef = storageRef(storage, postData.authorProfilePic); // Make sure postData.authorProfilePic is a valid path
+        if (postWithId.authorProfilePic) {
+          const profilePicRef = storageRef(
+            storage,
+            postWithId.authorProfilePic
+          ); // Make sure postData.authorProfilePic is a valid path
           try {
             const url = await getDownloadURL(profilePicRef);
-            postData.authorProfilePic = url;
+            postWithId.authorProfilePic = url;
           } catch (error) {
             console.error("Error fetching profile picture URL:", error);
           }
           const url = await getDownloadURL(profilePicRef);
-          postData.authorProfilePic = url;
+          postWithId.authorProfilePic = url;
         }
 
         // Fetch blog image URL
-        if (postData.blogImage) {
+        if (postWithId.blogImage) {
           try {
-            const blogImageRef = storageRef(storage, postData.blogImage);
+            const blogImageRef = storageRef(storage, postWithId.blogImage);
             const url = await getDownloadURL(blogImageRef);
-            postData.blogImage = url;
+            postWithId.blogImage = url;
           } catch (error) {
             console.error("Error fetching blog image URL:", error);
           }
-          const blogImageRef = storageRef(storage, postData.blogImage);
+          const blogImageRef = storageRef(storage, postWithId.blogImage);
           const url = await getDownloadURL(blogImageRef);
           postData.blogImage = url;
         }
 
-        blogPosts.value.push(postData);
+        blogPosts.value.push(postWithId);
+      });
+    };
+
+    const fetchCommentsForPost = async (postId: string) => {
+      const commentsCollection = collection(db, "comments");
+      const postCommentsQuery = query(
+        commentsCollection,
+        where("postId", "==", postId)
+      );
+
+      const querySnapshot = await getDocs(postCommentsQuery);
+      const comments = [];
+      querySnapshot.forEach((doc) => {
+        comments.push({ id: doc.id, ...doc.data() });
       });
     };
 
@@ -381,6 +408,7 @@ export default defineComponent({
       toggleCommentSection,
       newCommentText,
       submitComment,
+      comments,
     };
   },
 });
@@ -805,7 +833,7 @@ a {
   width: 700px;
   height: 242px;
   background-color: white;
-  margin-top: 0px;
+  margin-top: 12px;
   margin-left: 0px;
   display: flex;
   flex-direction: column;

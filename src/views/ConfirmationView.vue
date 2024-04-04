@@ -24,7 +24,7 @@
           data-auto-submit="false"
           autocomplete="off"
         >
-          <div class="container" id="inputs">
+          <div class="confirm-container" id="inputs">
             <input type="text" class="input" inputmode="numeric" maxlength="1" />
             <input type="text" class="input" inputmode="numeric" maxlength="1" />
             <input type="text" class="input" inputmode="numeric" maxlength="1" />
@@ -213,7 +213,7 @@ export default defineComponent({
   color: black;
   gap: 12px;
 }
-.container {
+.confirm-container {
   width: 496.49px;
   height: 80px;
   display: flex;
