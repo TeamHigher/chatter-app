@@ -317,6 +317,7 @@ body {
   font-family: "DM Sans Variable", sans-serif;
   color: white;
   line-height: 36px;
+  margin-top: 24px;
 }
 .button {
   width: 157px;
@@ -333,6 +334,7 @@ body {
   font-weight: 700;
   font-family: "DM Sans Variable", sans-serif;
   line-height: 27px;
+  margin-top: 36px;
 }
 .about-chatter-container {
   width: 100%;
