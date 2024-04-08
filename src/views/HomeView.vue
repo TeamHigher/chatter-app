@@ -4,11 +4,12 @@
       <div class="chat">
         <h1>CHATTER</h1>
       </div>
+      
       <div class="nav-items">
         <div class="routes">
           <router-link to="/home">Home</router-link>
-          <router-link to="/">About us</router-link>
-          <router-link to="/">Contact</router-link>
+          <router-link to="/AboutUs">About us</router-link>
+          <router-link to="/ContactUs">Contact</router-link>
           <router-link to="/">Blogs</router-link>
         </div>
         <div class="log">
@@ -183,13 +184,14 @@ body {
   font-family: "DM Sans Variable", sans-serif;
 }
 .navbar {
-  width: auto;
+  width: 100%;
   height: 98px;
   background-color: #d0d0d0;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .chat {
   font-size: 48px;
@@ -235,6 +237,15 @@ body {
   font-family: "DM Sans Variable", sans-serif;
   line-height: 24px;
 }
+.routes a {
+  color: black;
+  text-decoration: none;
+}
+.routes a:hover {
+  color: #543ee0;
+  text-decoration: underline;
+}
+
 .login {
   width: 157px;
   height: 56px;
@@ -245,6 +256,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.login a {
+  color: black;
+  text-decoration: none;
+}
+.login a:hover {
+  color: #543ee0;
+  text-decoration: underline;
 }
 .signup {
   width: 157px;
@@ -265,7 +284,7 @@ body {
   top: 99px;
   background-image: url("../assets/intro-image3-edited.jpeg");
   background: cover;
-  background-size: cover;
+  background-size: 100%;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
@@ -359,6 +378,9 @@ body {
   margin-bottom: 34px;
 }
 .about-chatter-image img {
+  width: 100%;
+}
+.about-chatter-image {
   width: 500px;
   height: 404px;
   object-fit: cover;

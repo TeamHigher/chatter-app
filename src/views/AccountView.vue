@@ -1,5 +1,5 @@
 <template>
-  <div class="top-bar">
+  <div class="top-bar-2">
     <!-- Display the user's profile picture -->
     <div class="user-profile">
       <img
@@ -89,15 +89,15 @@ export default defineComponent({
 
 <style>
 /* Add your CSS styles for the top bar, profile picture, and dropdown menu here */
-.top-bar {
-  width: 100%;
-  height: 66px;
+.top-bar-2 {
+  width: 300px;
+  height: 60px;
   background-color: white;
-  border: solid 1px #d0d0d0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  margin-left: 200px;
 }
 
 .user-profile {

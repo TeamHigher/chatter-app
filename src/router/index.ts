@@ -12,6 +12,8 @@ import AnalyticsView from "../views/AnalyticsView.vue";
 import AccountView from "../views/AccountView.vue";
 import NotificationView from "../views/NotificationView.vue";
 import PostView from "../views/PostView.vue";
+import AboutUs from "../views/AboutUs.vue";
+import ContactUs from "../views/ContactUs.vue"
 
 
 const routes = [
@@ -83,6 +85,16 @@ const routes = [
     path: "/post",
     name: "Post",
     component: PostView,
+  },
+  {
+    path: "/aboutus",
+    name: "About",
+    component: AboutUs,
+  },
+  {
+    path: "/contactus",
+    name: "Contact",
+    component: ContactUs,
   },
 ];
 
