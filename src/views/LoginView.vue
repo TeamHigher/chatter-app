@@ -150,7 +150,7 @@ export default defineComponent({
   margin-top: 50px;
 }
 .login-form button {
-  width: 516px;
+  width: 482px;
   height: 56px;
   background: #543ee0;
   border-radius: 8px;
@@ -161,6 +161,7 @@ export default defineComponent({
   margin-top: 5px;
   margin-bottom: 0px;
   cursor: pointer;
+  
 }
 .form-header {
   width: 440px;
