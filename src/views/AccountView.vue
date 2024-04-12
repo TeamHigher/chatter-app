@@ -9,7 +9,7 @@
       />
       <!-- Dropdown menu containing user's email and logout button -->
       <div class="dropdown">
-        <button class="dropbtn">{{ userEmail }}</button>
+        <button class="dropbtn"></button>
         <div class="dropdown-content">
           <router-link to="/account">Account</router-link>
           <router-link to="/notification">Notifications</router-link>
