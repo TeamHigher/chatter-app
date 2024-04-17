@@ -64,11 +64,11 @@
           Create Account
         </button>
         <button @click.prevent="signInWithPopup" class="signup-with-google">
-          <em><img src="../assets/google-logo.png" alt="" /></em>Signup with
+          <span><img src="../assets/google-logo.png" alt="" /></span>Signup with
           google
         </button>
         <button class="signup-with-linkedin">
-          <em><img src="../assets/linkedin-logo.png" alt="" /></em>Signup with
+          <span><img src="../assets/linkedin-logo.png" alt="" /></span>Signup with
           linkedin
         </button>
       </div>
@@ -494,7 +494,7 @@ input {
   margin-bottom: 0px;
 }
 .create-account {
-  width: 516px;
+  width: 482px;
   height: 80px;
   background: #543ee0;
   border-radius: 8px;
@@ -507,7 +507,7 @@ input {
   cursor: pointer;
 }
 .signup-with-google {
-  width: 516px;
+  width: 482px;
   height: 80px;
   background: #ffffff;
   border: 1px solid #e0e0e0;
@@ -532,7 +532,7 @@ input {
   margin-right: 11px;
 }
 .signup-with-linkedin {
-  width: 516px;
+  width: 482px;
   height: 80px;
   background: #ffffff;
   border: 1px solid #e0e0e0;

@@ -1,169 +1,171 @@
 <template>
   <body id="App">
-    <header>
-      <nav class="nav">
+    <header class="primary-header">
+      <div class="header-container">
         <h1>CHATTER</h1>
-        <div class="nav-items">
-          <div class="nav-items-routes">
-            <router-link to="/home">Home</router-link>
-            <router-link to="/AboutUs">About us</router-link>
-            <router-link to="/ContactUs">Contact</router-link>
-            <router-link to="/">Blogs</router-link>
-          </div>
-          <div class="login-and-signup">
-            <div class="login">
-              <router-link to="/login">Log in</router-link>
-            </div>
-            <div class="signup">
-              <router-link to="/signup">Sign up</router-link>
-            </div>
-          </div>
-        </div>
-      </nav>
+        <nav class="primary-nav">
+          <ul role="list" class="nav-list">
+            <li><router-link to="/home">Home</router-link></li>
+            <li><router-link to="AboutUs">About Us</router-link></li>
+            <li><router-link to="/ContactUs">Contact Us</router-link></li>
+            <li><router-link to="/">Blogs</router-link></li>
+          </ul>
+        </nav>
+        <span>
+          <router-link to="/login">Log In</router-link>
+          <router-link to="/signup">Sign up</router-link>
+        </span>
+      </div>
     </header>
-    <section class="intro">
-      <div class="intro-message">
-        <h1>Welcome to Chatter: A Haven for Text-Based Content</h1>
-        <h3>
-          Unleash the Power of Words, Connect With Like-minded Readers and
-          Writers
-        </h3>
-        <router-link to="/signup">
-          <div class="get-started">Get Started</div>
-        </router-link>
-      </div>
-    </section>
-    <section class="about-chatter">
-      <div class="split">
-        <div class="about-chatter-text">
-          <h5>About Chatter</h5>
-          <p>
-            Chatter is a multi-functional platform where authors and readers can
-            have access to their own content. It aims to be a traditional
-            bookworm's heaven, and a blog to get access to more text based
-            content. Our mission is to foster an inclusive and vibrant community
-            where diversity is celebrated. We encourage open- mindedness and
-            respect for all individuals, regardless of their background or
-            beliefs. By promoting dialogue and understanding we strive.
-          </p>
+    <main>
+      <section class="hero">
+        <div class="hero-container">
+          <img src="../assets/intro-image3-edited.jpeg" alt="" />
+          <div class="hero-text">
+            <h1>Welcome to Chatter: A Haven for Text-Based Content</h1>
+            <h3>
+              Unleash the Power of Words, Connect With Like-minded Readers and
+              Writers
+            </h3>
+            <a href=""><button>Get Started</button></a>
+          </div>
         </div>
-        <div class="about-chatter-image">
-          <img src="../assets/about-chatter-image.png" alt="About Chatter" />
-        </div>
-      </div>
-    </section>
-    <section class="join-chatter-container">
-      <div class="join-chatter">
-        <div class="text-one">
-          <h5>Why you should join chatter</h5>
-          <p>
-            Our goal is to make writers and readers see our platform as their
-            next heaven for blogging, ensuring ease in interactions, connecting
-            with like-minded peers, have access to favorite content based on
-            interests and able to communicate your great ideas with people
-          </p>
-        </div>
-        <div class="text-two">
-          <div class="text-two-1">
-            <img src="../assets/text-one-1-image.png" alt="Feature 1" />
-            <h6>Analytics</h6>
+      </section>
+      <section class="about-chatter">
+        <div class="split">
+          <div class="about-chatter-text">
+            <h5>About Chatter</h5>
             <p>
-              Analytics to track the number of views, likes and comment and also
-              analyze the performance of your articles over a period of time
+              Chatter is a multi-functional platform where authors and readers
+              can have access to their own content. It aims to be a traditional
+              bookworm's heaven, and a blog to get access to more text based
+              content. Our mission is to foster an inclusive and vibrant
+              community where diversity is celebrated. We encourage open-
+              mindedness and respect for all individuals, regardless of their
+              background or beliefs. By promoting dialogue and understanding we
+              strive.
             </p>
           </div>
-          <div class="text-two-2">
-            <div class="text-two-2-wrapper">
-              <img src="../assets/text-one-2-image.png" alt="Feature 2" />
-              <h6>Social interactions</h6>
+          <div class="about-chatter-image">
+            <img src="../assets/about-chatter-image.png" alt="About Chatter" />
+          </div>
+        </div>
+      </section>
+      <section class="join-chatter-container">
+        <div class="join-chatter">
+          <div class="text-one">
+            <h5>Why you should join chatter</h5>
+            <p>
+              Our goal is to make writers and readers see our platform as their
+              next heaven for blogging, ensuring ease in interactions,
+              connecting with like-minded peers, have access to favorite content
+              based on interests and able to communicate your great ideas with
+              people
+            </p>
+          </div>
+          <div class="text-two">
+            <div class="text-two-1">
+              <img src="../assets/text-one-1-image.png" alt="Feature 1" />
+              <h6>Analytics</h6>
               <p>
-                Users on the platform can interact with posts they like, comment
-                and engage in discussions
+                Analytics to track the number of views, likes and comment and
+                also analyze the performance of your articles over a period of
+                time
               </p>
             </div>
-          </div>
-          <div class="text-two-3">
-            <div class="text-two-3-wrapper">
-              <img src="../assets/text-one-3-image.png" alt="Feature 2" />
-              <h6>Content creation</h6>
-              <p>
-                Write nice and appealing content with our in-built markdown, a
-                rich text editor
-              </p>
+            <div class="text-two-2">
+              <div class="text-two-2-wrapper">
+                <img src="../assets/text-one-2-image.png" alt="Feature 2" />
+                <h6>Social interactions</h6>
+                <p>
+                  Users on the platform can interact with posts they like,
+                  comment and engage in discussions
+                </p>
+              </div>
+            </div>
+            <div class="text-two-3">
+              <div class="text-two-3-wrapper">
+                <img src="../assets/text-one-3-image.png" alt="Feature 2" />
+                <h6>Content creation</h6>
+                <p>
+                  Write nice and appealing content with our in-built markdown, a
+                  rich text editor
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <div class="profile">
-      <img src="../assets/profile-image.png" alt="Profile Image" />
-      <div class="profile-text">
-        <p class="profile-p-1">
-          "Chatter has become an integral part of my online experience. As a
-          user of this incredible blogging platform, I have discovered a vibrant
-          community of individuals who are passionate about sharing their ideas
-          and engaging in thoughtful discussions.”
-        </p>
-        <p class="profile-p-2">
-          <strong>Adebobola Muhydeen</strong>,
-          <em>Software developer at apple</em>
-        </p>
-        <router-link to="/signup">
-          <div class="profile-button">Join Chatter</div>
-        </router-link>
-      </div>
-    </div>
-    <div class="card-container">
-      <div class="card">
-        <div class="card-image">
-          <div class="card-image-left">
-            <img src="../assets/card-image-1.png" alt="Card Image 1" />
-            <img src="../assets/card-image-2.png" alt="Card Image 2" />
-          </div>
-          <div class="card-image-right">
-            <img src="../assets/card-image-3.png" alt="Card Image 3" />
-          </div>
-        </div>
-        <div class="card-text">
-          <h5>Write, read and connect with great minds on chatter</h5>
-          <p>
-            Share people your great ideas, and also read write-ups based on your
-            interests. connect with people of same interests and goals
+      </section>
+      <div class="profile">
+        <img src="../assets/profile-image.png" alt="Profile Image" />
+        <div class="profile-text">
+          <p class="profile-p-1">
+            "Chatter has become an integral part of my online experience. As a
+            user of this incredible blogging platform, I have discovered a
+            vibrant community of individuals who are passionate about sharing
+            their ideas and engaging in thoughtful discussions.”
           </p>
-          <div>
-            <router-link to="/signup">
-              <div class="profile-button">Get Started</div>
-            </router-link>
+          <p class="profile-p-2">
+            <strong>Adebobola Muhydeen</strong>,
+            <em>Software developer at apple</em>
+          </p>
+          <router-link to="/signup">
+            <div class="profile-button">Join Chatter</div>
+          </router-link>
+        </div>
+      </div>
+      <div class="card-container">
+        <div class="card">
+          <div class="card-image">
+            <div class="card-image-left">
+              <img src="../assets/card-image-1.png" alt="Card Image 1" />
+              <img src="../assets/card-image-2.png" alt="Card Image 2" />
+            </div>
+            <div class="card-image-right">
+              <img src="../assets/card-image-3.png" alt="Card Image 3" />
+            </div>
+          </div>
+          <div class="card-text">
+            <h5>Write, read and connect with great minds on chatter</h5>
+            <p>
+              Share people your great ideas, and also read write-ups based on
+              your interests. connect with people of same interests and goals
+            </p>
+            <div>
+              <router-link to="/signup">
+                <div class="profile-button">Get Started</div>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="footer">
-      <h3>CHATTER</h3>
-      <div>
-        <ul>
-          <h5>Explore</h5>
-          <li>Community</li>
-          <li>Trending blogs</li>
-          <li>Chatter for teams</li>
-        </ul>
+      <div class="footer">
+        <h3>CHATTER</h3>
+        <div>
+          <ul>
+            <h5>Explore</h5>
+            <li>Community</li>
+            <li>Trending blogs</li>
+            <li>Chatter for teams</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <h5>Support</h5>
+            <li>Support docs</li>
+            <li>Join slack</li>
+            <li>Contact</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <h5>Official blog</h5>
+            <li>Official blog</li>
+            <li>Engineering blog</li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <ul>
-          <h5>Support</h5>
-          <li>Support docs</li>
-          <li>Join slack</li>
-          <li>Contact</li>
-        </ul>
-      </div>
-      <div>
-        <ul>
-          <h5>Official blog</h5>
-          <li>Official blog</li>
-          <li>Engineering blog</li>
-        </ul>
-      </div>
-    </div>
+    </main>
   </body>
 </template>
 <script lang="ts">
@@ -186,160 +188,133 @@ body {
   margin-top: 0px;
 }
 
-.nav {
-  width: 100%;
-  height: 6.125rem;
+.primary-header {
   background-color: #d0d0d0;
-  padding: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  padding: 25px 0;
+}
+
+span {
+  display: flex;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 88px;
+
+  a:nth-child(2) {
+    color: white;
+    width: 9.81rem;
+    height: 3.5rem;
+    background-color: #543ee0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid purple;
+  }
+
+  a:nth-child(1) {
+    color: black;
+    width: 9.81rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #543ee0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-}
-.nav h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 4.5rem;
-  color: #543ee0;
+  gap: 20px;
   font-family: "DM Sans Variable", sans-serif;
-  margin-left: 4.5rem;
+
+  h1 {
+    color: #543ee0;
+    display: inline;
+    font-size: 45px;
+    font-family: "DM Sans Variable", sans-serif;
+    margin-left: 88px;
+  }
 }
 
-.nav-items {
-  width: 50.313rem;
-  height: 3.5rem;
-  gap: 10.875rem;
+.nav-list {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  margin-right: 4.5rem;
-}
-.nav-items-routes {
-  width: 20rem;
-  height: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  font-size: 0.938rem;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 1.5rem;
-}
-.nav-items-routes a {
-  color: black;
-  text-decoration: none;
-}
-.nav-items-routes a:hover {
-  color: #543ee0;
-  text-decoration: underline;
+  gap: 20px;
+
+  a {
+    text-decoration: none;
+    color: black;
+    list-style-type: none;
+  }
+  li {
+    list-style-type: none;
+  }
+  a:hover {
+    color: #543ee0;
+    text-decoration: underline;
+  }
 }
 
-.login-and-signup {
-  width: 21.125rem;
-  height: 3.5rem;
-  margin-right: 0rem;
-  gap: 1.5rem;
-  display: flex;
+.hero-container {
+  
 }
-.login {
-  width: 9.813rem;
-  height: 3.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid #543ee0;
-  padding: 0.5rem, 1rem;
-  gap: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login a {
-  color: black;
-  text-decoration: none;
-}
-.login a:hover {
-  color: #543ee0;
-  text-decoration: underline;
-}
-.signup {
-  width: 9.813rem;
-  height: 3.5rem;
-  border-radius: 0.5rem;
-  background-color: #543ee0;
-  padding: 0.5rem, 1rem;
-  gap: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.signup a {
-  color: white;
-  text-decoration: none;
-}
-.signup a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-.intro {
+.hero-container img {
   width: 100%;
   height: 47.75rem;
-  background-image: url("../assets/intro-image3-edited.jpeg");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
-  flex-wrap: wrap;
+  margin-top: 6.8rem;
 }
-.intro-message {
-  width: 61.5rem;
-  height: 20.75rem;
-  padding: 0px, 0px, 74px, 0px;
-  gap: 1.5rem;
-  font-size: 3rem;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   color: white;
+  text-align: left;
+
+  h1 {
+    font-size: 3rem;
+    font-family: "DM Sans Variable", sans-serif;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 4.5rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-family: "DM Sans Variable", sans-serif;
+    font-weight: 500;
+    line-height: 2.3rem;
+    margin-top: 1.5rem;
+    color: white;
+    display: inline;
+  }
+  a > button {
+    width: 9.81rem;
+    height: 3.5rem;
+    background-color: #543ee0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: "Roboto", sans-serif;
+    cursor: pointer;
+    margin-top: 1.5rem;
+  }
 }
-.intro-message h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  color: #ffffff;
-  line-height: 4.5rem;
-}
-.intro-message h3 {
-  width: 46.25rem;
-  height: 4.5rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  color: white;
-  line-height: 2.25rem;
-  margin-top: 1.5rem;
-}
-.get-started {
-  width: 9.813rem;
-  height: 3.5rem;
-  border-radius: 0.5rem;
-  background-color: #543ee0;
-  padding: 0.5rem, 1rem;
-  gap: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.125rem;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 1.7rem;
-  margin-top: 2.25rem;
-}
+
 .about-chatter {
   width: 100%;
   height: 25.25rem;
@@ -629,8 +604,6 @@ img {
 .profile img {
   width: 300px;
   height: 300px;
-  top: 52px;
-  left: 53px;
   gap: 24px;
   margin-left: 73px;
   margin-top: 93px;

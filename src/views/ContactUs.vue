@@ -109,6 +109,7 @@ export default defineComponent({
 .contact-us input,
 .contact-us textarea {
   width: 700px;
+  height: auto;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
