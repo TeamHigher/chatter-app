@@ -31,29 +31,31 @@
           </div>
         </div>
       </section>
-      <section class="about-chatter">
-        <div class="split">
-          <div class="about-chatter-text">
-            <h5>About Chatter</h5>
-            <p>
-              Chatter is a multi-functional platform where authors and readers
-              can have access to their own content. It aims to be a traditional
-              bookworm's heaven, and a blog to get access to more text based
-              content. Our mission is to foster an inclusive and vibrant
-              community where diversity is celebrated. We encourage open-
-              mindedness and respect for all individuals, regardless of their
-              background or beliefs. By promoting dialogue and understanding we
-              strive.
-            </p>
-          </div>
-          <div class="about-chatter-image">
-            <img src="../assets/about-chatter-image.png" alt="About Chatter" />
+      <section>
+        <div class="aboutChatter-container">
+          <div class="even-columns">
+            <div class="column-1">
+              <h5>About Chatter</h5>
+              <p>
+                Chatter is a multi-functional platform where authors and readers
+                can have access to their own content. It aims to be a
+                traditional bookworm's heaven, and a blog to get access to more
+                text based content. Our mission is to foster an inclusive and
+                vibrant community where diversity is celebrated. We encourage
+                open- mindedness and respect for all individuals, regardless of
+                their background or beliefs. By promoting dialogue and
+                understanding we strive.
+              </p>
+            </div>
+            <div class="column-2">
+              <img src="../assets/about-chatter-image.png" alt="" />
+            </div>
           </div>
         </div>
       </section>
-      <section class="join-chatter-container">
-        <div class="join-chatter">
-          <div class="text-one">
+      <section>
+        <div class="wjc-container">
+          <div class="wjc-text">
             <h5>Why you should join chatter</h5>
             <p>
               Our goal is to make writers and readers see our platform as their
@@ -63,82 +65,80 @@
               people
             </p>
           </div>
-          <div class="text-two">
-            <div class="text-two-1">
-              <img src="../assets/text-one-1-image.png" alt="Feature 1" />
-              <h6>Analytics</h6>
-              <p>
-                Analytics to track the number of views, likes and comment and
-                also analyze the performance of your articles over a period of
-                time
-              </p>
-            </div>
-            <div class="text-two-2">
-              <div class="text-two-2-wrapper">
-                <img src="../assets/text-one-2-image.png" alt="Feature 2" />
-                <h6>Social interactions</h6>
-                <p>
-                  Users on the platform can interact with posts they like,
-                  comment and engage in discussions
-                </p>
-              </div>
-            </div>
-            <div class="text-two-3">
-              <div class="text-two-3-wrapper">
-                <img src="../assets/text-one-3-image.png" alt="Feature 2" />
-                <h6>Content creation</h6>
-                <p>
-                  Write nice and appealing content with our in-built markdown, a
-                  rich text editor
-                </p>
-              </div>
-            </div>
+        </div>
+        <div class="triple-cards">
+          <div class="card">
+            <img src="../assets/analytics.png" alt="" />
+            <h6>Analytics</h6>
+            <p>
+              Analytics to track the number of views, likes and comment and also
+              analyze the performance of your articles over a period of time
+            </p>
+          </div>
+          <div class="card">
+            <img src="../assets/social-interaction.png" alt="" />
+            <h6>Social interactions</h6>
+            <p>
+              Users on the platform can interact with posts they like, comment
+              and engage in discussions
+            </p>
+          </div>
+          <div class="card">
+            <img src="../assets/content-creation.png" alt="" />
+            <h6>Content creation</h6>
+            <p>
+              Write nice and appealing content with our in-built markdown, a
+              rich text editor
+            </p>
           </div>
         </div>
       </section>
-      <div class="profile">
-        <img src="../assets/profile-image.png" alt="Profile Image" />
-        <div class="profile-text">
-          <p class="profile-p-1">
-            "Chatter has become an integral part of my online experience. As a
-            user of this incredible blogging platform, I have discovered a
-            vibrant community of individuals who are passionate about sharing
-            their ideas and engaging in thoughtful discussions.”
-          </p>
-          <p class="profile-p-2">
-            <strong>Adebobola Muhydeen</strong>,
-            <em>Software developer at apple</em>
-          </p>
-          <router-link to="/signup">
-            <div class="profile-button">Join Chatter</div>
-          </router-link>
-        </div>
-      </div>
-      <div class="card-container">
-        <div class="card">
-          <div class="card-image">
-            <div class="card-image-left">
-              <img src="../assets/card-image-1.png" alt="Card Image 1" />
-              <img src="../assets/card-image-2.png" alt="Card Image 2" />
-            </div>
-            <div class="card-image-right">
-              <img src="../assets/card-image-3.png" alt="Card Image 3" />
-            </div>
+      <section>
+        <div class="testimonial">
+          <div class="testimonial-image">
+            <img src="../assets/profile-image.png" alt="" />
           </div>
-          <div class="card-text">
+          <div class="testimonial-text">
+            <p>
+              "Chatter has become an integral part of my online experience. As a
+              user of this incredible blogging platform, I have discovered a
+              vibrant community of individuals who are passionate about sharing
+              their ideas and engaging in thoughtful discussions.”
+            </p>
+
+            <div class="name-title">
+              <strong>Adebobola Muhydeen, </strong
+              ><em>Software developer at apple</em>
+            </div>
+
+            <router-link to="/signup"
+              ><button>Join Chatter</button></router-link
+            >
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="connect-container">
+          <div class="connect-column-one">
+            <div><img src="../assets/card-image-1.png" alt="" /></div>
+            <div></div>
+            <div><img src="../assets/card-image-2.png" alt="" /></div>
+          </div>
+          <div class="connect-column-two">
+            <div></div>
+            <div><img src="../assets/card-image-3.png" alt="" /></div>
+            <div></div>
+          </div>
+          <div class="connect-column-three">
             <h5>Write, read and connect with great minds on chatter</h5>
             <p>
               Share people your great ideas, and also read write-ups based on
               your interests. connect with people of same interests and goals
             </p>
-            <div>
-              <router-link to="/signup">
-                <div class="profile-button">Get Started</div>
-              </router-link>
-            </div>
+            <a href=""><button>Get Started</button></a>
           </div>
         </div>
-      </div>
+      </section>
       <div class="footer">
         <h3>CHATTER</h3>
         <div>
@@ -186,6 +186,9 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 0px;
+}
+section {
+  margin-bottom: 6rem;
 }
 
 .primary-header {
@@ -267,9 +270,6 @@ span {
   }
 }
 
-.hero-container {
-  
-}
 .hero-container img {
   width: 100%;
   height: 47.75rem;
@@ -315,451 +315,216 @@ span {
   }
 }
 
-.about-chatter {
-  width: 100%;
-  height: 25.25rem;
-  background-color: white;
+.aboutChatter-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 6rem;
-  margin-right: 0rem;
+  margin-top: 8rem;
 }
-.split {
-  width: 81rem;
-  height: 25.25rem;
-  gap: 5.25rem;
-  background-color: white;
+.even-columns {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-left: 200px;
+  margin-right: 200px;
 }
-.about-chatter-text {
+.column-1 {
   width: 42.9rem;
-  height: auto;
-  padding: 0px, 0px, 0px, 72px;
-  gap: 24px;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  margin-top: 0rem;
-}
-.about-chatter-text h5 {
-  font-size: 2.375rem;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 4.5rem;
-  color: black;
-  margin-top: 0rem;
-  margin-bottom: 2.125rem;
+
+  h5 {
+    font-size: 2.38rem;
+    font-weight: 700;
+    line-height: 4.5rem;
+    margin-top: 0rem;
+    margin-bottom: 2rem;
+  }
+  p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+  }
 }
 
-.about-chatter-text p {
-  width: 686px;
-  height: 162px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 34px;
-}
-
-.about-chatter-image {
+.column-2 {
   width: 31.25rem;
-  height: 25.25rem;
-  object-fit: cover;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.wjc-text {
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h5 {
+    display: flex;
+    justify-content: center;
+    font-size: 2.38rem;
+    margin-bottom: 24px;
+  }
+  p {
+    width: 65%;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    margin-top: 24px;
+  }
 }
 
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-.join-chatter-container {
-  width: auto;
-  height: auto;
+.triple-cards {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 96px;
-  margin-right: 0px;
-}
-.join-chatter {
-  width: auto;
-  height: auto;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 2rem;
   gap: 54px;
-  padding-inline: 20px;
-  padding-block: 20px;
-}
-.text-one {
-  width: 1040px;
-  height: 177px;
-  padding: 0px, 0px, 0px, 72px;
-  gap: 24px;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  margin-top: 0px;
-}
-.text-one h5 {
-  width: 1040px;
-  height: 72px;
-  font-size: 38px;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 72px;
-  color: black;
-  margin-top: 0px;
-  margin-bottom: 24px;
-  text-align: center;
-}
-.text-one p {
-  width: 1040px;
-  height: 81px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 24px;
-}
-.text-two {
-  width: 1014px;
-  height: 324px;
-  padding: 0px, 0px, 0px, 72px;
-  gap: 48px;
-  margin-top: 54px;
-  display: flex;
-  justify-content: space-between;
-}
-.text-two-1 {
-  width: 306px;
-  height: 324px;
-  border-radius: 8px;
-  padding: 15px, 18px, 15px, 18px;
-  gap: 12px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1), 0px 0px 16px rgba(0, 0, 0, 0.1),
-    0px 0px 32px rgba(0, 0, 0, 0.1);
-}
-.text-two-2 {
-  width: 306px;
-  height: 324px;
-  border-radius: 8px;
-  padding: 15px, 18px, 15px, 18px;
-  gap: 12px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1), 0px 0px 16px rgba(0, 0, 0, 0.1),
-    0px 0px 32px rgba(0, 0, 0, 0.1);
-}
-.text-two-3 {
-  width: 306px;
-  height: 324px;
-  border-radius: 8px;
-  padding: 15px, 18px, 15px, 18px;
-  gap: 12px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1), 0px 0px 16px rgba(0, 0, 0, 0.1),
-    0px 0px 32px rgba(0, 0, 0, 0.1);
-}
-.text-two-1 h6 {
-  width: 106px;
-  height: 36px;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 36px;
-  color: black;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  text-align: center;
-  margin-left: 18px;
-}
-.text-two-1 p {
-  width: 254px;
-  height: 135px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 12px;
-  margin-left: 18px;
-}
-.text-two-1 img {
-  width: 92px;
-  height: 88px;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  margin-left: 18px;
-  margin-bottom: 12px;
-}
-.text-two-2-wrapper {
-  width: 254px;
-  height: 256px;
-  top: 21px;
-  left: 18px;
-  gap: 12px;
-  margin-top: 21px;
-}
-.text-two-2 img {
-  width: 92px;
-  height: 88px;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0px;
-  margin-left: 18px;
-  margin-bottom: 12px;
-}
-.text-two-2 h6 {
-  width: 211px;
-  height: 36px;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 36px;
-  color: black;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  text-align: center;
-  margin-left: 18px;
-}
-.text-two-2 p {
-  width: 254px;
-  height: 135px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 12px;
-  margin-left: 18px;
-}
-.text-two-3-wrapper {
-  width: 254px;
-  height: 256px;
-  top: 21px;
-  left: 18px;
-  gap: 12px;
-  margin-top: 21px;
-}
-.text-two-3 img {
-  width: 92px;
-  height: 88px;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0px;
-  margin-left: 18px;
-  margin-bottom: 12px;
-}
-.text-two-3 h6 {
-  width: 211px;
-  height: 36px;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 36px;
-  color: black;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  text-align: center;
-  margin-left: 18px;
-}
-.text-two-3 p {
-  width: 254px;
-  height: 135px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 12px;
-  margin-left: 18px;
-}
-.profile {
-  width: 100%;
-  height: 492px;
-  top: 2121px;
-  background-color: #ffedcc;
-  margin-top: 107px;
-  margin-bottom: 96px;
-  display: flex;
-}
-.profile-text {
-  width: 924px;
-  height: 257px;
-  top: 93px;
-  left: 440px;
-  gap: 24px;
-  margin-top: 93px;
-  margin-left: 52px;
-}
-.profile img {
-  width: 300px;
-  height: 300px;
-  gap: 24px;
-  margin-left: 73px;
-  margin-top: 93px;
-  margin-bottom: 79px;
-  border-radius: 50%;
-}
-.profile-p-1 {
-  width: 924px;
-  height: 81px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 0px;
-  margin-bottom: 48px;
-  margin-left: 0px;
-}
-.profile-p-2 strong {
-  width: 500px;
-  height: 48px;
-  font-size: 32px;
-  font-weight: 500;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 48px;
-  color: black;
-  margin-top: 48px;
-  margin-left: 0px;
-}
-.profile-button {
-  width: 157px;
-  height: 56px;
-  border-radius: 8px;
-  background-color: #543ee0;
-  padding: 8px, 16px;
-  gap: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 18px;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 27px;
-  margin-top: 38.5px;
-  margin-left: 0px;
-}
-.card-container {
-  width: 100%;
-  height: 412px;
-  top: 270px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 96px;
-  margin-right: 0px;
 }
 .card {
-  width: 1127px;
-  height: 412px;
-  top: 270px;
-  left: 156px;
-  gap: 120px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 96px;
-  margin-bottom: 96px;
-  margin-right: 0px;
-}
-.card-image {
-  width: 352px;
-  height: 412px;
-  top: 270px;
-  left: 156px;
-  gap: 44px;
-  display: flex;
-  justify-content: space-between;
-}
-.card-image-left img {
-  width: 154px;
-  height: 158px;
-  object-fit: cover;
+  width: 290px;
+  height: 324px;
+  border-radius: 8px;
+  gap: 12px;
+  padding: 15px 18px 15px 18px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1), 0px 0px 16px rgba(0, 0, 0, 0.1),
+    0px 0px 32px rgba(0, 0, 0, 0.1);
+
+  h6 {
+    font-size: 24px;
+    text-align: left;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  p {
+    font-size: 18px;
+    text-align: left;
+    margin-top: 12px;
+    line-height: 27px;
+    font-weight: 400;
+  }
 }
 
-.card-image-left {
-  width: 154px;
+.testimonial {
+  width: 100%;
+  height: 492px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffedcc;
+  gap: 8rem;
+}
+.testimonial-image {
+  width: 500px;
+  img {
+    width: 100%;
+    border-radius: 50%;
+    margin-left: 4.56rem;
+    margin-top: 2rem;
+  }
+}
+
+.testimonial-text {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    width: 70%;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    margin-bottom: 3rem;
+  }
+  .name-title {
+    display: inline;
+  }
+  strong {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 48px;
+  }
+  em {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+  }
+  button {
+    width: 9.81rem;
+    height: 3.5rem;
+    background-color: #543ee0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: "Roboto", sans-serif;
+    cursor: pointer;
+    margin-top: 2rem;
+  }
+}
+
+.connect-container {
+  width: 100%;
+  display: flex;
   height: 412px;
-  gap: 96px;
+  margin-left: 0px;
+}
+.connect-column-one {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin-right: 44px;
+  margin-left: 120px;
+  img {
+   width: 100%;
+   height: 100%;
+  }
+}
+.connect-column-two {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  height: 100%;
+  margin-right: 150px;
+  img {
+   width: 100%;
+    height: 100%;
+  }
 }
-.card-image-right img {
-  width: 154px;
-  height: 158px;
-  object-fit: cover;
-}
-.card-image-right {
-  width: 154px;
-  height: 412px;
-  gap: 96px;
+.connect-column-three {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.card-text {
-  width: 655px;
-  height: 310px;
-  top: 270px;
-  left: 156px;
-  gap: 32px;
-  margin-top: -100px;
-}
-.card-text h5 {
-  width: 655px;
-  height: 144px;
-  font-size: 48px;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 72px;
-  color: black;
+  flex-direction: column;
   margin-top: 0px;
-  margin-bottom: 24px;
-  text-align: left;
-}
-.card-text p {
-  width: 594px;
-  height: 54px;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: "DM Sans Variable", sans-serif;
-  color: black;
-  line-height: 27px;
-  margin-top: 24px;
-  text-align: left;
+  width: 40%;
+  h5 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 72px;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  p{
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    margin-top: px;
+  }
+  button {
+    width: 9.81rem;
+    height: 3.5rem;
+    background-color: #543ee0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 2rem;
+  }
 }
 
-.card-button {
-  width: 157px;
-  height: 58px;
-  border-radius: 8px;
-  background-color: #543ee0;
-  padding: 8px, 16px;
-  gap: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 18px;
-  font-weight: 700;
-  font-family: "DM Sans Variable", sans-serif;
-  line-height: 27px;
-  margin-top: 32px;
-  margin-left: 0px;
-}
 .footer {
   width: 100%;
   height: 402px;

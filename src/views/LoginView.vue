@@ -34,6 +34,7 @@
         <div class="password">
           <p>Password</p>
           <input type="password" placeholder="********" v-model="password" />
+        
         </div>
         <div v-if="message" class="message">{{ message }}</div>
         <button @click.prevent="signIn" class="create-account">Log in</button>
@@ -285,6 +286,7 @@ input {
   color: #111111;
   margin-top: 10px;
   margin-bottom: 0px;
+  text-align: left;
 }
 .password {
   width: 516px;
@@ -318,7 +320,9 @@ input {
   color: #111111;
   margin-top: 10px;
   margin-bottom: 0px;
+  text-align: left;
 }
+
 .message {
   width: 516px;
   height: 56px;
