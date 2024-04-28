@@ -34,7 +34,6 @@
         <div class="password">
           <p>Password</p>
           <input type="password" placeholder="********" v-model="password" />
-        
         </div>
         <div v-if="message" class="message">{{ message }}</div>
         <button @click.prevent="signIn" class="create-account">Log in</button>
@@ -86,7 +85,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .register {
   width: 100%;
   height: 100%;
@@ -162,7 +161,6 @@ export default defineComponent({
   margin-top: 5px;
   margin-bottom: 0px;
   cursor: pointer;
-  
 }
 .form-header {
   width: 440px;

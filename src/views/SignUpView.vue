@@ -27,17 +27,17 @@
           </div>
         </div>
         <div class="name">
-          <div class="first-name">
-            <p>First name</p>
-            <input type="text" placeholder="John" v-model="firstName" />
+          <div>
+            <label for="firstName">First name</label>
+            <input type="text" placeholder="John" v-model="firstName" name="firstName" />
           </div>
-          <div class="last-name">
-            <p>Last name</p>
-            <input type="text" placeholder="Doe" v-model="lastName" />
+          <div>
+            <label for="lastName">Last name</label>
+            <input type="text" placeholder="Doe" v-model="lastName" name="lastName" />
           </div>
         </div>
         <div class="join-as">
-          <p>You are joining as?</p>
+          <label for="options">You are joining as?</label>
           <input list="options" name="options" v-model="options" />
           <datalist id="options">
             <option value="Reader" />
@@ -45,19 +45,20 @@
           </datalist>
         </div>
         <div class="email">
-          <p>Email address</p>
-          <input type="email" placeholder="Johndoe@gmail.com" v-model="email" />
+          <label for="email">Email address</label>
+          <input type="email" placeholder="Johndoe@gmail.com" v-model="email" name="email" />
         </div>
         <div class="password">
-          <p>Password</p>
-          <input type="password" placeholder="********" v-model="password" />
+          <label for="password">Password</label>
+          <input type="password" placeholder="********" v-model="password" name="password" />
         </div>
         <div class="confirm-password">
-          <p>Confirm Password</p>
+          <label for="confirmPassword">Confirm Password</label>
           <input
             type="password"
             placeholder="********"
             v-model="confirmPassword"
+            name="confirmPassword"
           />
         </div>
         <button @click.prevent="register" class="create-account">
@@ -175,7 +176,18 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM sans Variable", Sans-serif;
+}
+
 .register {
   width: 100%;
   height: 100%;
@@ -186,6 +198,7 @@ export default defineComponent({
   align-items: center;
   height: 100vh;
 }
+
 .register-image {
   width: 622px;
   height: 100%;
@@ -209,7 +222,6 @@ export default defineComponent({
   width: 214px;
   height: 72px;
   line-height: 72px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 48px;
   font-weight: 700;
   color: #ffffff;
@@ -220,7 +232,6 @@ export default defineComponent({
 .register-image-text p {
   width: 550px;
   height: 72px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 24px;
   font-weight: 500;
   color: white;
@@ -229,17 +240,16 @@ export default defineComponent({
 .registration-form {
   width: 520px;
   height: 924px;
-  top: 30px;
-  left: 818px;
-  gap: 24px;
+  gap: 1rem;
   display: flex;
   flex-direction: column;
   margin-left: 300px;
+  margin-top: 1rem;
 }
 .form-header {
   width: 440px;
   height: 114px;
-  gap: 24px;
+  gap: 1rem;
   margin-top: 0px;
   display: flex;
   flex-direction: column;
@@ -255,7 +265,6 @@ export default defineComponent({
 h3 {
   width: 74px;
   height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #111111;
@@ -273,11 +282,10 @@ h3 {
   margin-top: 0px;
 }
 .options-bar {
-  width: 440px;
+  width: 482px;
   height: 6px;
   background: white;
   display: flex;
-  flex-direction: row;
 }
 .options-bar-left {
   width: 50%;
@@ -299,13 +307,13 @@ h3 {
 .header-text h1 {
   width: 415px;
   height: 48px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 48px;
   color: #111111;
   margin-top: 0px;
   margin-bottom: 0px;
+  text-align: center;
 }
 .name {
   width: 516px;
@@ -313,57 +321,38 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 12px;
+  /* gap: 12px; */
   margin-top: 5px;
 }
-.first-name {
+.name > * {
   width: 252px;
-  height: 92px;
+  height: 50px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.last-name {
-  width: 252px;
-  height: 92px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+
 input {
   width: 218px;
-  height: 921px;
+  height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #111111;
-  margin-top: 10px;
+  margin-top:5px;
   margin-bottom: 0px;
 }
 
-.first-name p {
-  width: 100px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
+ label {
+  font-size: 18px;
   font-weight: 400;
   color: #111111;
   margin-top: 0px;
   margin-bottom: 0px;
 }
-.last-name p {
-  width: 100px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+
 .join-as {
   width: 516px;
   height: 92px;
@@ -375,27 +364,17 @@ input {
 }
 .join-as input {
   width: 482px;
-  height: 92px;
+  height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #111111;
   margin-top: 10px;
   margin-bottom: 0px;
 }
-.join-as p {
-  width: 200px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+
 .email {
   width: 516px;
   height: 92px;
@@ -405,23 +384,13 @@ input {
   gap: 12px;
   margin-top: 5px;
 }
-.email p {
-  width: 200px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+
 .email input {
   width: 482px;
-  height: 56px;
+  height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #111111;
@@ -438,23 +407,14 @@ input {
   margin-top: 5px;
 }
 
-.password p {
-  width: 200px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+
 .password input {
   width: 482px;
-  height: 56px;
+  height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
+  
   font-size: 16px;
   font-weight: 500;
   color: #111111;
@@ -470,23 +430,13 @@ input {
   gap: 12px;
   margin-top: 5px;
 }
-.confirm-password p {
-  width: 200px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+
 .confirm-password input {
   width: 482px;
-  height: 56px;
+  height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #111111;
@@ -495,10 +445,9 @@ input {
 }
 .create-account {
   width: 482px;
-  height: 80px;
+  height: 50px;
   background: #543ee0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 18px;
   font-weight: 500;
   color: #ffffff;
@@ -508,11 +457,10 @@ input {
 }
 .signup-with-google {
   width: 482px;
-  height: 80px;
+  height: 50px;
   background: #ffffff;
-  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
+  border: 1px solid #e0e0e0;
   font-size: 18px;
   font-weight: 400;
   line-height: 27px;
@@ -527,32 +475,32 @@ input {
 .signup-with-google img {
   width: 24px;
   height: 24px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 11px;
+ justify-content: center;
+  align-items: center;
+  display: flex
 }
 .signup-with-linkedin {
   width: 482px;
-  height: 80px;
+  height: 50px;
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 18px;
   font-weight: 500;
-  margin-top: 5px;
-  margin-bottom: 0px;
+  margin-top: 1px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  align-items: center;
   color: #111111;
 }
 .signup-with-linkedin img {
-  width: 24px;
-  height: 24px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 11px;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+ 
 }
 </style>
