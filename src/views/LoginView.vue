@@ -28,12 +28,22 @@
         </div>
 
         <div class="email">
-          <p>Email address</p>
-          <input type="email" placeholder="Johndoe@gmail.com" v-model="email" />
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            placeholder="Johndoe@gmail.com"
+            v-model="email"
+            name="email"
+          />
         </div>
         <div class="password">
-          <p>Password</p>
-          <input type="password" placeholder="********" v-model="password" />
+          <label for="password">Password</label>
+          <input
+            type="password"
+            placeholder="********"
+            v-model="password"
+            name="password"
+          />
         </div>
         <div v-if="message" class="message">{{ message }}</div>
         <button @click.prevent="signIn" class="create-account">Log in</button>
@@ -86,6 +96,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "DM sans variable", sans-serif;
+}
 .register {
   width: 100%;
   height: 100%;
@@ -94,7 +110,6 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: center;
-
   height: 100vh;
 }
 .register-image {
@@ -120,7 +135,6 @@ export default defineComponent({
   width: 214px;
   height: 72px;
   line-height: 72px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 48px;
   font-weight: 700;
   color: #ffffff;
@@ -131,7 +145,6 @@ export default defineComponent({
 .register-image-text p {
   width: 550px;
   height: 72px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 24px;
   font-weight: 500;
   color: white;
@@ -139,7 +152,7 @@ export default defineComponent({
 }
 
 .login-form {
-  width: 520px;
+  width: 482px;
   height: 470px;
   top: 30px;
   left: 818px;
@@ -149,12 +162,11 @@ export default defineComponent({
   margin-left: 300px;
   margin-top: 50px;
 }
-.login-form button {
+button {
   width: 482px;
-  height: 56px;
+  height: 50px;
   background: #543ee0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 18px;
   font-weight: 500;
   color: #ffffff;
@@ -179,9 +191,8 @@ export default defineComponent({
   flex-direction: column;
 }
 h3 {
-  width: 74px;
+  width: auto;
   height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #111111;
@@ -189,20 +200,18 @@ h3 {
   cursor: pointer;
   margin-top: 0px;
 }
+h3:hover {
+  color: #543ee0;
+}
 .register-login {
-  width: 440px;
+  width: 482px;
   height: 24px;
-  gap: 24px;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin-top: 0px;
 }
-.register-login a {
-  text-decoration: none;
-}
+
 .options-bar {
-  width: 440px;
+  width: 482px;
   height: 6px;
   display: flex;
   flex-direction: row;
@@ -227,7 +236,6 @@ h3 {
 .header-text h1 {
   width: 415px;
   height: 48px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 48px;
@@ -240,12 +248,11 @@ h3 {
 }
 
 input {
-  width: 218px;
-  height: 921px;
+  width: 482px;
+  height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #111111;
@@ -253,72 +260,10 @@ input {
   margin-bottom: 0px;
 }
 
-.email {
-  width: 516px;
-  height: 92px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 5px;
-}
-.email p {
-  width: 200px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
+label {
+  font-size: 18px;
   font-weight: 400;
   color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-.email input {
-  width: 482px;
-  height: 56px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  text-align: left;
-}
-.password {
-  width: 516px;
-  height: 92px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 5px;
-}
-
-.password p {
-  width: 200px;
-  height: 24px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-.password input {
-  width: 482px;
-  height: 56px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  text-align: left;
 }
 
 .message {

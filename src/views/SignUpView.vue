@@ -29,11 +29,23 @@
         <div class="name">
           <div>
             <label for="firstName">First name</label>
-            <input type="text" placeholder="John" v-model="firstName" name="firstName" />
+            <input
+              type="text"
+              placeholder="John"
+              v-model="firstName"
+              name="firstName"
+              class="user_name"
+            />
           </div>
           <div>
             <label for="lastName">Last name</label>
-            <input type="text" placeholder="Doe" v-model="lastName" name="lastName" />
+            <input
+              type="text"
+              placeholder="Doe"
+              v-model="lastName"
+              name="lastName"
+              class="user_name"
+            />
           </div>
         </div>
         <div class="join-as">
@@ -46,11 +58,21 @@
         </div>
         <div class="email">
           <label for="email">Email address</label>
-          <input type="email" placeholder="Johndoe@gmail.com" v-model="email" name="email" />
+          <input
+            type="email"
+            placeholder="Johndoe@gmail.com"
+            v-model="email"
+            name="email"
+          />
         </div>
         <div class="password">
           <label for="password">Password</label>
-          <input type="password" placeholder="********" v-model="password" name="password" />
+          <input
+            type="password"
+            placeholder="********"
+            v-model="password"
+            name="password"
+          />
         </div>
         <div class="confirm-password">
           <label for="confirmPassword">Confirm Password</label>
@@ -69,8 +91,8 @@
           google
         </button>
         <button class="signup-with-linkedin">
-          <span><img src="../assets/linkedin-logo.png" alt="" /></span>Signup with
-          linkedin
+          <span><img src="../assets/linkedin-logo.png" alt="" /></span>Signup
+          with linkedin
         </button>
       </div>
     </form>
@@ -116,7 +138,7 @@ export default defineComponent({
           firstName: this.firstName,
           lastName: this.lastName,
         });
-      } catch (error:any) {
+      } catch (error: any) {
         console.error(error);
       }
     },
@@ -182,11 +204,9 @@ export default defineComponent({
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body {
   font-family: "DM sans Variable", Sans-serif;
 }
+
 
 .register {
   width: 100%;
@@ -263,7 +283,7 @@ body {
   flex-direction: column;
 }
 h3 {
-  width: 74px;
+  width: auto;
   height: 24px;
   font-size: 16px;
   font-weight: 700;
@@ -272,14 +292,16 @@ h3 {
   cursor: pointer;
   margin-top: 0px;
 }
+h3:hover {
+  color: #543ee0;
+}
 .register-login {
-  width: 440px;
+  width: 482px;
   height: 24px;
-  gap: 24px;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   margin-top: 0px;
+
 }
 .options-bar {
   width: 482px;
@@ -321,19 +343,11 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* gap: 12px; */
   margin-top: 5px;
-}
-.name > * {
-  width: 252px;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
 input {
-  width: 218px;
+  width: 482px;
   height: 50px;
   padding: 10px 16px;
   border: 1px solid #e0e0e0;
@@ -341,11 +355,16 @@ input {
   font-size: 16px;
   font-weight: 500;
   color: #111111;
-  margin-top:5px;
+  margin-top: 5px;
   margin-bottom: 0px;
 }
 
- label {
+.user_name {
+    width: 218px;
+    height: 50px;
+  }
+
+label {
   font-size: 18px;
   font-weight: 400;
   color: #111111;
@@ -362,18 +381,7 @@ input {
   gap: 12px;
   margin-top: 5px;
 }
-.join-as input {
-  width: 482px;
-  height: 50px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
+
 
 .email {
   width: 516px;
@@ -385,18 +393,7 @@ input {
   margin-top: 5px;
 }
 
-.email input {
-  width: 482px;
-  height: 50px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
+
 .password {
   width: 516px;
   height: 92px;
@@ -408,19 +405,6 @@ input {
 }
 
 
-.password input {
-  width: 482px;
-  height: 50px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
 .confirm-password {
   width: 516px;
   height: 92px;
@@ -431,18 +415,7 @@ input {
   margin-top: 5px;
 }
 
-.confirm-password input {
-  width: 482px;
-  height: 50px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
+
 .create-account {
   width: 482px;
   height: 50px;
@@ -475,9 +448,9 @@ input {
 .signup-with-google img {
   width: 24px;
   height: 24px;
- justify-content: center;
+  justify-content: center;
   align-items: center;
-  display: flex
+  display: flex;
 }
 .signup-with-linkedin {
   width: 482px;
@@ -501,6 +474,5 @@ input {
   justify-content: center;
   align-items: center;
   display: flex;
- 
 }
 </style>

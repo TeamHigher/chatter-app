@@ -7,34 +7,62 @@
           <figcaption>Overview</figcaption>
           <ul class="list">
             <li class="item-1">
-              <div class="icon-container">
-                <img src="../assets/item-1-icon.png" alt="icon-1" />
-              </div>
-              <router-link to="/feed">Feeds</router-link>
+              <router-link to="/feed">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-1-icon.png')"
+                    alt="icon-1"
+                  />
+                </div>
+                Feed
+              </router-link>
             </li>
+
             <li class="item-2">
-              <div class="icon-container">
-                <img src="../assets/item-2-icon.png" alt="icon-2" />
-              </div>
-              <router-link to="/bookmarks">Bookmarks</router-link>
+              <router-link to="/bookmarks">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-2-icon.png')"
+                    alt="icon-2"
+                  />
+                </div>
+                Bookmarks
+              </router-link>
             </li>
+
             <li class="item-3">
-              <div class="icon-container">
-                <img src="../assets/item-3-icon.png" alt="icon-3" />
-              </div>
-              <router-link to="/teamblogs">Team blogs</router-link>
+              <router-link to="/teamblogs">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-3-icon.png')"
+                    alt="icon-3"
+                  />
+                </div>
+                Team Blogs
+              </router-link>
             </li>
             <li class="item-4">
-              <div class="icon-container">
-                <img src="../assets/item-4-icon.png" alt="icon-4" />
-              </div>
-              <router-link to="/drafts">Drafts</router-link>
+              <router-link to="/drafts">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-4-icon.png')"
+                    alt="icon-4"
+                  />
+                </div>
+                Drafts
+              </router-link>
             </li>
+
             <li class="item-5">
-              <div class="icon-container">
-                <img src="../assets/item-5-icon.png" alt="icon-5" />
-              </div>
-              <router-link to="/analytics">Analytics</router-link>
+              <router-link to="/analytics">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-5-icon.png')"
+                    alt="icon-5"
+                  />
+                </div>
+                Analytics
+              </router-link>
             </li>
           </ul>
         </figure>
@@ -56,16 +84,27 @@
           <figcaption>Personal</figcaption>
           <ul class="list">
             <li class="item-1">
-              <div class="icon-container">
-                <img src="../assets/item-1-icon--1.png" alt="icon-1" />
-              </div>
-              <router-link to="/account">Account</router-link>
+              <router-link to="/account">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-1-icon--1.png')"
+                    alt="icon-1"
+                  />
+                </div>
+                Account
+              </router-link>
             </li>
+
             <li class="item-2">
-              <div class="icon-container">
-                <img src="../assets/item-1-icon-2.png" alt="icon-2" />
-              </div>
-              <router-link to="/notification">Notification</router-link>
+              <router-link to="/notification">
+                <div class="icon-container">
+                  <img
+                    :src="require('@/assets/item-1-icon-2.png')"
+                    alt="icon-2"
+                  />
+                </div>
+                Notifications
+              </router-link>
             </li>
             <li class="item-6">
               <router-link to="/"> Log out</router-link>
@@ -75,20 +114,30 @@
       </div>
     </div>
     <div class="sub-wrap">
-      <div class="top-bar">
+      <div class="content">
         <div class="search">
-          <img src="../assets/search-icon.png" alt="icon-5" />
+          <img :src="require('@/assets/search-icon.png')" alt="icon-5" />
           <input type="text" placeholder="search chatter" />
         </div>
-      </div>
-      <div class="content">
-        <!-- Profile picture upload -->
-        <input
-          type="file"
-          @change="handleProfilePicUpload"
-          class="profile-pic"
-        />
+        <div class="profile-pic-upload">
+          <label for="profile-pic-upload" class="custom-profile-input"
+            >Choose Profile Pic</label
+          >
+          <input
+            id="profile-pic-upload"
+            type="file"
+            accept="image/*"
+            @change="handleProfilePicUpload"
+            style="display: none"
+          />
 
+          <input
+            type="text"
+            class="file-name-input"
+            :value="authorProfilePic ? authorProfilePic.name : ''"
+            readonly
+          />
+        </div>
         <input
           type="text"
           v-model="authorName"
@@ -101,17 +150,30 @@
           placeholder="Title"
           class="title"
         />
-        <textarea
+
+        <!-- Markdown editor for post content -->
+        <v-md-editor
           v-model="postContent"
-          placeholder="Write your post here"
-          :options="editorOptions"
+          :editorOptions="editorOptions"
+          class="custom-md-editor"
+        ></v-md-editor>
+
+        <label for="file-upload" class="custom-file-input"
+          >Choose blog Image</label
         >
-        </textarea>
         <input
+          id="file-upload"
           type="file"
           accept="image/*"
           @change="handleBlogImageUpload"
-          class="blog-image"
+          style="display: none"
+        />
+
+        <input
+          type="text"
+          class="file-name-input"
+          :value="blogImage ? blogImage.name : 'Choose Image...'"
+          readonly
         />
 
         <button @click="publishPost">Publish Post</button>
@@ -131,8 +193,15 @@ import {
 } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useStore } from "vuex";
+import VMdEditor from "@kangc/v-md-editor";
+import "@kangc/v-md-editor/lib/style/base-editor.css";
+import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
+import vuepressTheme from "@kangc/v-md-editor/lib/theme/vuepress.js";
 
 export default defineComponent({
+  components: {
+    VMdEditor, // Register the markdown editor component
+  },
   setup() {
     const postContent = ref("");
     const authorProfilePic = ref<File | null>(null);
@@ -230,7 +299,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -238,7 +307,7 @@ export default defineComponent({
 }
 .wrapper {
   width: 100%;
-  height: 100%;
+
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -373,18 +442,23 @@ a {
 }
 .search {
   position: relative;
+  width: 50%;
+  margin-top: 0px;
+}
+.profile-pic-upload {
+  display: flex;
+  flex-direction: column;
+}
+.name {
+  width: 200px;
+  margin-top: 4rem;
+}
+.title {
+  width: 200px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
-.search input[type="text"] {
-  width: 700px;
-  height: 48px;
-  border: 1px solid #d0d0d0;
-  border-radius: 8px;
-  padding-left: 10px;
-  font-size: 16px;
-  font-weight: 400;
-  color: #111111;
-}
 .search img {
   position: absolute;
   left: 10px;
@@ -394,41 +468,32 @@ a {
 
 .sub-wrap {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  margin-left: 0px;
+  justify-content: center;
+  align-items: center;
+  outline: 1px solid red;
   margin-top: 0px;
-  justify-content: center;
-  align-items: center;
 }
+
 .content {
-  width: 1500px;
-  height: 100%;
-  background-color: white;
-  border: solid 1px #d0d0d0;
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  width: 100%;
 }
 button {
   width: 177px;
-  height: 56px;
   background-color: #543ee0;
-  border: none;
   border-radius: 8px;
   padding: 8px 16px;
-  font-family: "DM sans Variable", Sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: white;
-  margin-bottom: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+  margin-top: 30px;
+}
+button:hover {
+  background-color: #3a2ca9;
 }
 a {
   text-decoration: none;
@@ -445,15 +510,41 @@ a {
   margin-right: 100px;
 }
 
-textarea {
-  width: 1076px;
-  height: 803px;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
+.custom-file-input {
+  background-color: #543ee0;
+  background-color: gray;
+  color: white;
+  border: none;
   border-radius: 8px;
-  font-family: "DM sans Variable", Sans-serif;
-  font-size: 18px;
-  margin-top: 30px;
+  padding: 8px 16px;
+  font-size: 16px;
   font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+}
+
+.custom-profile-input {
+  background-color: #543ee0;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 12rem;
+}
+
+/* Style the text input */
+.file-name-input {
+  width: 300px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #111111;
 }
 </style>
